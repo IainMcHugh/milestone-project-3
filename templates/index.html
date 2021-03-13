@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebApp Store</title>
+  </head>
+  <body>
+    <p>Insert Heading block here</p>
+    <section class="home-page">
+      <div class="suggest-container">
+        <h2>Popular</h2>
+        <div class="suggest-card-container">
+          {{ for website in websites.popular }}
+          <a class="card" href="url_for({{website.url}}">{{ website.image }}</a>
+          {{ endfor }}
+        </div>
+      </div>
+      <div class="suggest-container">
+        <h2>Recently Added</h2>
+        <div class="suggest-card-container">
+          {{ for website in websites.recent }}
+          <a class="card" href="url_for({{website.url}}">{{ website.image }}</a>
+          {{ endfor }}
+        </div>
+      </div>
+      <div class="suggest-container">
+        <h2>Random</h2>
+        <div class="suggest-card-container">
+          {{ for website in websites.random }}
+          <a class="card" href="url_for({{website.url}}">{{ website.image }}</a>
+          {{ endfor }}
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

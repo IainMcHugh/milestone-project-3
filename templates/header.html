@@ -1,0 +1,14 @@
+{{ block heading }}
+<header>
+  <div id="logo-container">LOGO</div>
+  {{ searchblock }} {{ if user }}
+  <div id="header-logged-in">User</div>
+  {{ else }}
+  <div id="header-logged-out">
+    <a class="button-link-secondary" href="url_for(login)">LOGIN</a>
+    <a class="button-link-secondary" href="url_for(login)">LOGIN</a>
+  </div>
+  {{ endif }}
+</header>
+
+{{ endblock }}
