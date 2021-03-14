@@ -4,10 +4,12 @@
   --GREY_DARKER: #c4c4c4;
   --BLUE: #11bdf3;
   --WHITE: white;
+  --TEXT_SECONDARY: #6d6d6d;
 }
 
 body {
   background-color: var(--GREY);
+  font-family: 'Roboto', 'Helvetica Neue';
 }
 
 header {
@@ -78,9 +80,62 @@ header {
 .card a {
   text-decoration: none;
   width: 100px;
+  height: 100%;
   color: var(--WHITE);
   display: flex;
   justify-content: center;
   align-self: center;
   word-wrap: break-word;
+}
+
+/* site details page */
+
+.main-container {
+  padding: 24px 8px;
+}
+
+.panel {
+  border: 1px solid var(--GREY_DARKER);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+.panel > h1 {
+  font-size: 24px;
+  line-height: 24px;
+  margin-bottom: 8px;
+}
+
+.panel h3 {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 200;
+  margin-bottom: 8px;
+}
+
+.panel h4 {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--TEXT_SECONDARY);
+  font-weight: 200;
+  margin-bottom: 12px;
+}
+
+.stat-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.stat-container > p {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.star-container {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  column-gap: 2px;
 }

@@ -45,7 +45,7 @@ def siteDetails():
         'owners': ['IainMcHugh'],
         'title': 'WebApp Store',
         'url': 'https://www.webappstore.com',
-        'description': 'This is a description of the site.',
+        'description': 'This is a description of the purpose of the website and blah blah blah. This is a description of the purpose of the website and blah blah blah. This is a description of the purpose of the website and blah blah blah.',
         'stars': 4,
         'reviews': 100,
         'last_update': 'This is the most recent update description.',

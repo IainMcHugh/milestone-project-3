@@ -1,16 +1,20 @@
 {% extends "base.html" %} {% block content %}
 <div class="main-container">
   <section class="panel">
-    {{ website.title }} {{ website.description }}
+    <h1>{{ website.title }}</h1>
+    <h4>{{ website.description }}</h4>
     <div class="stat-container">
       <div class="star-container">
         {% for star in range(website.stars) %}
-        <div class="star">Star</div>
+        <div class="star"><i class="fas fa-star"></i></div>
         {% endfor %} {% for star in range(5 - website.stars)%}
-        <div class="star-outline">Star outline</div>
+        <div class="star-outline"><i class="far fa-star"></i></div>
         {% endfor %}
       </div>
-      {{ website.reviews}} reviews {% if website.last_update%}
+      <p>{{ website.reviews}} reviews</p>
+    </div>
+    <div class="recent-update">
+      {% if website.last_update%}
       <h3>Most Recent Update</h3>
       <h4>{{ website.last_update }}</h4>
       {% endif %}
