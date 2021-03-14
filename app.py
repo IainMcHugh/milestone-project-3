@@ -18,8 +18,6 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def index():
-    # user = mongo.db.users.find()
-    # return render_template('user.html', user=user)
     websites = {'popular': [
         {'url': 'test1', 'image': 'test_image1'},
         {'url': 'test2', 'image': 'test_image2'},
@@ -67,6 +65,36 @@ def siteDetails():
         ]
     }
     return render_template('siteDetails.html', website=website)
+
+
+@app.route('/user')
+def user():
+    # user = mongo.db.users.find()
+    user = {
+        'username': 'Iain_McHugh',
+        'email': 'iamchugh@tcd.ie',
+        'websites': [
+            {
+                'id': '123456',
+                'name': 'My website',
+                'url': 'https://www.google.com',
+                'isOwner': True
+            },
+            {
+                'id': '123456',
+                'name': 'My second website',
+                'url': 'https://www.google.com',
+                'isOwner': True
+            },
+            {
+                'id': '123456',
+                'name': 'My third website',
+                'url': 'https://www.google.com',
+                'isOwner': False
+            },
+        ]
+    }
+    return render_template('user.html', user=user)
 
 
 if __name__ == '__main__':

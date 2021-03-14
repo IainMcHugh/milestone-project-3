@@ -1,19 +1,30 @@
 {% extends "base.html" %} {% block content %}
-<div class='user-heading'>
+<div class="user-page">
+  <div class="user-heading">
     <h1>{{ user.username }}'s websites</h1>
-  <a class='button-link-primary' href="url_for(add_website)">ADD</a>
-</div>
-<section class="website-list">
-    {{ for website in user.websites }}
-    <div class="panel">
-        <div class='website-data'>
-            <a href='url_for({{website.url}})''>{{ website.name }}</p>
-            <p>Owner: {{ if website.isOwner: Yes else No }}</p>
-            <a class='button-link-secondary' href="url_for(edit_website)">EDIT</a>
-            <a class='button-link-secondary' href="url_for(delete_website)">DELETE</a>
+    <button class="button-primary button-large" href="url_for(add_website)">
+      ADD
+    </button>
+  </div>
+  <section class="website-list">
+    {% for website in user.websites %}
+    <div class="panel small-panel">
+      <div class="website-data">
+        <a class="user-website-name" href="website.url">{{ website.name }}</a>
+        <p>
+          Owner: {% if website.isOwner: %}
+          <span>Yes</span>
+          {% else %}
+          <span>No</span>
+          {% endif %}
+        </p>
+        <div class="website-data-buttons">
+          <a class="button-link-secondary" href="#">EDIT</a>
+          <a class="button-link-secondary" href="#">DELETE</a>
         </div>
+      </div>
     </div>
-    {{ endfor }}
-</section>
+    {% endfor %}
+  </section>
+</div>
 {% endblock %}
-

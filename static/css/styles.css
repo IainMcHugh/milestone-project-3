@@ -5,6 +5,7 @@
   --GREY_DARKER: #c4c4c4;
   --BLUE: #11bdf3;
   --WHITE: white;
+  --TEXT_PRIMARY: #000000;
   --TEXT_SECONDARY: #6d6d6d;
 }
 
@@ -206,6 +207,7 @@ header {
   padding: 8px;
   font-size: 12px;
   line-height: 16px;
+  background-color: var(--WHITE);
   color: var(--BLUE);
   border: 0px;
   box-shadow: inset 0 0 0 1px var(--BLUE);
@@ -225,6 +227,7 @@ header {
   line-height: 16px;
   border: 0;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .comment-container {
@@ -314,5 +317,64 @@ header {
 
   #comment {
     min-height: 48px;
+  }
+}
+
+/* user page */
+
+.user-page {
+  padding: 48px 8px;
+}
+
+.small-panel {
+  padding: 16px 8px;
+}
+
+.user-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.user-heading > h1 {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 200;
+}
+
+.website-data {
+  display: grid;
+  grid-template-columns: 1fr 80px 72px;
+  column-gap: 8px;
+  align-items: center;
+}
+
+.user-website-name {
+  text-decoration: none;
+  color: var(--TEXT_PRIMARY);
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+  .user-heading {
+    margin-bottom: 24px;
+  }
+
+  .user-heading > h1 {
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  .button-large {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 6px 24px;
+  }
+
+  .small-panel {
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
