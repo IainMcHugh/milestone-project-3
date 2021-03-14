@@ -43,3 +43,7 @@ interface Websites {
 3. As user, add comment - (push comment to Websites comment array)
 
 template inheritance - components
+
+Credits
+
+- Star icon: https://fontawesome.com/

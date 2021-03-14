@@ -1,17 +1,22 @@
 {% extends "base.html" %} {% block content %}
 <div class="main-container">
   <section class="panel">
-    <h1>{{ website.title }}</h1>
-    <h4>{{ website.description }}</h4>
-    <div class="stat-container">
-      <div class="star-container">
-        {% for star in range(website.stars) %}
-        <div class="star"><i class="fas fa-star"></i></div>
-        {% endfor %} {% for star in range(5 - website.stars)%}
-        <div class="star-outline"><i class="far fa-star"></i></div>
-        {% endfor %}
+    <div class="panel-split">
+      <div class="panel-left">
+        <h1>{{ website.title }}</h1>
+        <h4>{{ website.description }}</h4>
+        <div class="stat-container">
+          <div class="star-container">
+            {% for star in range(website.stars) %}
+            <div class="star"><i class="fas fa-star"></i></div>
+            {% endfor %} {% for star in range(5 - website.stars)%}
+            <div class="star-outline"><i class="far fa-star"></i></div>
+            {% endfor %}
+          </div>
+          <p>{{ website.reviews}} reviews</p>
+        </div>
       </div>
-      <p>{{ website.reviews}} reviews</p>
+      <div class="panel-right"></div>
     </div>
     <div class="recent-update">
       {% if website.last_update%}
@@ -21,31 +26,39 @@
     </div>
   </section>
   <section class="panel">
-    <form onSubmit="(e) => e.preventDefault()">
+    <form id="comment-form" onSubmit="(e) => e.preventDefault()">
       <!-- Make post request to website comments + update UI with comment -->
-      <label for="comment">Comments</label>
-      <textarea id="comment" name="comment"></textarea>
+      <label id="comment-label" for="comment">Comments</label>
+      <textarea id="comment" name="comment" required></textarea>
       <div class="form-submit">
-        <select
-          name="type"
-          id="type"
-          aria-placeholder="Comment type.."
-          required
-        >
+        <select name="type" id="type" aria-placeholder="Category" required>
+          <option value="">Category</option>
           <option value="comment">Comment</option>
           <option value="bug">Bug</option>
           <option value="update">Update</option>
         </select>
-        <button type="submit">Comment</button>
+        <button class="button-primary" type="submit">Comment</button>
       </div>
     </form>
     {% for comment in website.comments %}
-    <div class="comment-heading-container">
-      <p class="comment-name">{{comment.username}}</p>
-      <div class="comment-stars">Stars</div>
-      <div class="comment-data">{{ comment.timestamp }}</div>
+    <div class="comment-container">
+      <div class="comment-heading-container">
+        <p class="comment-name">{{comment.username}}</p>
+        <div class="comment-data">
+          <div class="comment-stars">
+            <div class="star-container">
+              {% for star in range(comment.stars) %}
+              <div class="star"><i class="fas fa-star"></i></div>
+              {% endfor %} {% for star in range(5 - comment.stars)%}
+              <div class="star-outline"><i class="far fa-star"></i></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="comment-time">{{ comment.timestamp }}</div>
+        </div>
+      </div>
+      <p class="comment-value">{{ comment.value }}</p>
     </div>
-    <p class="comment-value">{{ comment.value }}</p>
     {% endfor %}
   </section>
 </div>

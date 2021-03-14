@@ -51,15 +51,15 @@ def siteDetails():
         'last_update': 'This is the most recent update description.',
         'comments': [
             {
-                'username': 'Comment_bob_123',
-                'timestamp': '1970-05-25, 14:22:32:1394',
+                'username': 'bob_123',
+                'timestamp': '2 days ago',
                 'value': 'I really like this website!',
                 'stars': 4,
                 'comment_type': 'COMMENT',
             },
             {
-                'username': 'Comment_jane_456',
-                'timestamp': '1970-05-26, 14:22:46:1394',
+                'username': 'jane_456',
+                'timestamp': '3 days ago',
                 'value': 'I found this bug I think should be fixed!',
                 'stars': 3,
                 'comment_type': 'BUG',
