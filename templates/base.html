@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/reset.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <title>WebApp Store</title>
+  </head>
+  <body>
+    <header>
+      <div id="logo-container">LOGO</div>
+      <div id="header-logged-in">User</div>
+      <div id="header-logged-out">
+        <a class="button-link-secondary" href="url_for(login)">LOGIN</a>
+        <a class="button-link-secondary" href="url_for(login)">LOGIN</a>
+      </div>
+    </header>
+
+    {% block content%} {% endblock %}
+  </body>
+  <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+</html>

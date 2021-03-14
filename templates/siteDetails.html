@@ -1,58 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ website.title }} - WebApp Store</title>
-  </head>
-  <body>
-    <header>Logo - Searchbar - User</header>
-    <div class="main-container">
-      <section class="panel">
-        {{ website.title }} {{ website.description }}
-        <div class="stat-container">
-          <div class="star-container">
-            {{ for star in website.stars }}
-            <div class="star">Star</div>
-            {{ endfor }} {{ for star in (website.stars - 5)}}
-            <div class="star-outline">Star outline</div>
-            {{ endfor }}
-          </div>
-          {{ website.reviews}} reviews {{ if website.last_update}}
-          <h3>Most Recent Update</h3>
-          <h4>{{ website.last_update }}</h4>
-          {{ endif }}
-        </div>
-      </section>
-      <section class="panel">
-        <form onSubmit="(e) => e.preventDefault()">
-          <!-- Make post request to website comments + update UI with comment -->
-          <label for="comment">Comments</label>
-          <textarea id="comment" name="comment" />
-          <div class="form-submit">
-            <select
-              name="type"
-              id="type"
-              aria-placeholder="Comment type.."
-              required
-            >
-              <option value="comment">Comment</option>
-              <option value="bug">Bug</option>
-              <option value="update">Update</option>
-            </select>
-            <button type="submit">Comment</button>
-          </div>
-        </form>
-        {{ for comment in website.comments }}
-        <div class="comment-heading-container">
-          <p class="comment-name">{{comment.username}}</p>
-          <div class="comment-stars">Stars</div>
-          <div class="comment-data">{{ comment.timestamp }}</div>
-        </div>
-        <p class="comment-value">{{ comment.value }}</p>
-        {{ endfor }}
-      </section>
+{% extends "base.html" %} {% block content %}
+<div class="main-container">
+  <section class="panel">
+    {{ website.title }} {{ website.description }}
+    <div class="stat-container">
+      <div class="star-container">
+        {% for star in range(website.stars) %}
+        <div class="star">Star</div>
+        {% endfor %} {% for star in range(5 - website.stars)%}
+        <div class="star-outline">Star outline</div>
+        {% endfor %}
+      </div>
+      {{ website.reviews}} reviews {% if website.last_update%}
+      <h3>Most Recent Update</h3>
+      <h4>{{ website.last_update }}</h4>
+      {% endif %}
     </div>
-  </body>
-</html>
+  </section>
+  <section class="panel">
+    <form onSubmit="(e) => e.preventDefault()">
+      <!-- Make post request to website comments + update UI with comment -->
+      <label for="comment">Comments</label>
+      <textarea id="comment" name="comment"></textarea>
+      <div class="form-submit">
+        <select
+          name="type"
+          id="type"
+          aria-placeholder="Comment type.."
+          required
+        >
+          <option value="comment">Comment</option>
+          <option value="bug">Bug</option>
+          <option value="update">Update</option>
+        </select>
+        <button type="submit">Comment</button>
+      </div>
+    </form>
+    {% for comment in website.comments %}
+    <div class="comment-heading-container">
+      <p class="comment-name">{{comment.username}}</p>
+      <div class="comment-stars">Stars</div>
+      <div class="comment-data">{{ comment.timestamp }}</div>
+    </div>
+    <p class="comment-value">{{ comment.value }}</p>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
