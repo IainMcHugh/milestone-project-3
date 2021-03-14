@@ -4,9 +4,9 @@
     <h2>Popular</h2>
     <div class="suggest-card-container">
       {% for website in websites.popular %}
-      <a class="card" href='{{ url_for("siteDetails") }}'
-        >{{ website.image }}</a
-      >
+      <div class="card">
+        <a href='{{ url_for("siteDetails") }}'>{{ website.image }}</a>
+      </div>
       {% endfor %}
     </div>
   </div>
@@ -14,9 +14,9 @@
     <h2>Recently Added</h2>
     <div class="suggest-card-container">
       {% for website in websites.recent %}
-      <a class="card" href='{{ url_for("siteDetails") }}'
-        >{{ website.image }}</a
-      >
+      <div class="card">
+        <a href='{{ url_for("siteDetails") }}'>{{ website.image }}</a>
+      </div>
       {% endfor %}
     </div>
   </div>
@@ -24,9 +24,9 @@
     <h2>Random</h2>
     <div class="suggest-card-container">
       {% for website in websites.random %}
-      <a class="card" href='{{ url_for("siteDetails") }}'
-        >{{ website.image }}</a
-      >
+      <div class="card">
+        <a href='{{ url_for("siteDetails") }}'>{{ website.image }}</a>
+      </div>
       {% endfor %}
     </div>
   </div>

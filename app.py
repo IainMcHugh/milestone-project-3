@@ -22,7 +22,10 @@ def index():
     # return render_template('user.html', user=user)
     websites = {'popular': [
         {'url': 'test1', 'image': 'test_image1'},
-        {'url': 'test2', 'image': 'test_image2'}
+        {'url': 'test2', 'image': 'test_image2'},
+        {'url': 'test2', 'image': 'test_image2'},
+        {'url': 'test2', 'image': 'test_image2'},
+        {'url': 'test2', 'image': 'test_image2'},
         ],
         'recent': [
         {'url': 'recent_test1', 'image': 'recent_test_image1'},
