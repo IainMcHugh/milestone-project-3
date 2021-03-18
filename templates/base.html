@@ -28,12 +28,17 @@
       <div id="logo-container">LOGO</div>
       <!-- <div id="header-logged-in">User</div> -->
       <div id="header-logged-out">
-        <a class="button-link-secondary" href="url_for(login)">LOGIN</a>
-        <a class="button-link-secondary" href="url_for(login)">SIGNUP</a>
+        <button id="header-log-in" class="button-link-secondary">Log in</button>
+        <button id="header-sign-up" class="button-link-secondary">
+          Sign up
+        </button>
       </div>
     </header>
-
-    {% block content%} {% endblock %}
+    {% block content %} {% endblock %}
+    <div class="modal-overlay">
+      <div class="modal-content">This is a modal.</div>
+    </div>
   </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 </html>

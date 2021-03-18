@@ -19,19 +19,25 @@ mongo = PyMongo(app)
 @app.route('/')
 def index():
     websites = {'popular': [
-        {'url': 'test1', 'image': 'test_image1'},
-        {'url': 'test2', 'image': 'test_image2'},
-        {'url': 'test2', 'image': 'test_image2'},
-        {'url': 'test2', 'image': 'test_image2'},
-        {'url': 'test2', 'image': 'test_image2'},
+        {'url': 'test1', 'image': ''},
+        {'url': 'test2', 'image': ''},
+        {'url': 'test2', 'image': ''},
+        {'url': 'test2', 'image': ''},
+        {'url': 'test2', 'image': ''},
         ],
         'recent': [
-        {'url': 'recent_test1', 'image': 'recent_test_image1'},
-        {'url': 'recent_test2', 'image': 'recent_test_image2'}
+        {'url': 'recent_test1', 'image': ''},
+        {'url': 'recent_test2', 'image': ''},
+        {'url': 'recent_test1', 'image': ''},
+        {'url': 'recent_test2', 'image': ''},
+        {'url': 'recent_test1', 'image': ''}
         ],
         'random': [
-        {'url': 'random_test1', 'image': 'random_test_image1'},
-        {'url': 'random_test2', 'image': 'random_test_image2'}
+        {'url': 'random_test1', 'image': ''},
+        {'url': 'random_test2', 'image': ''},
+        {'url': 'random_test1', 'image': ''},
+        {'url': 'random_test2', 'image': ''},
+        {'url': 'random_test1', 'image': ''}
         ],
         }
     return render_template('index.html', websites=websites)

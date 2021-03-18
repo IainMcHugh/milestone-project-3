@@ -357,6 +357,11 @@ header {
 }
 
 @media only screen and (min-width: 768px) {
+  .user-page {
+    width: 752px;
+    margin: 24px auto;
+  }
+
   .user-heading {
     margin-bottom: 24px;
   }
@@ -377,4 +382,24 @@ header {
     font-size: 16px;
     line-height: 24px;
   }
+}
+
+/* Sign Up Modal */
+
+.modal-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal-content {
+  width: 320px;
+  margin: 20vh auto;
+  border: 1px solid black;
+  background-color: white;
+  padding: 24px;
 }
