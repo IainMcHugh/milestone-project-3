@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template, redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists('env.py'):
     import env
 
@@ -16,7 +17,7 @@ app.secret_key = os.environ.get('SECRET_KEY')
 mongo = PyMongo(app)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     websites = {'popular': [
         {'url': 'test1', 'image': ''},
@@ -101,6 +102,43 @@ def user():
         ]
     }
     return render_template('user.html', user=user)
+
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    if request.method == 'POST':
+        pwd = request.form.get('password')
+        re_pwd = request.form.get('repassword')
+
+        if pwd != re_pwd:
+            flash('Passwords do not match.', 'error')
+            return redirect(url_for('index'))
+        
+        existing_username = mongo.db.users.find_one(
+            {'username': request.form.get('username').lower()})
+        existing_email = mongo.db.users.find_one(
+            {'email': request.form.get('email').lower()})
+        
+        if existing_username or existing_email:
+            flash("Username or email already exists.", 'error')
+            return redirect(url_for('index'))
+        
+        register = {
+            "username": request.form.get('username').lower(),
+            "email": request.form.get('email').lower(),
+            "password": generate_password_hash(request.form.get('password').lower()),
+        }
+        mongo.db.users.insert_one(register)
+
+        session["user"] = request.form.get('username').lower()
+        flash('Welcome ' + request.form.get('username') + ', you are now logged in', 'success')
+        return redirect(url_for('index'))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    print('login')
 
 
 if __name__ == '__main__':

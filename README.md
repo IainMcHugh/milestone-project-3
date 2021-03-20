@@ -47,3 +47,4 @@ template inheritance - components
 Credits
 
 - Star icon: https://fontawesome.com/
+- delete flash message: https://stackoverflow.com/questions/57660542/flask-closing-flash-message

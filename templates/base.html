@@ -28,17 +28,86 @@
       <div id="logo-container">LOGO</div>
       <!-- <div id="header-logged-in">User</div> -->
       <div id="header-logged-out">
-        <button id="header-log-in" class="button-link-secondary">Log in</button>
-        <button id="header-sign-up" class="button-link-secondary">
-          Sign up
-        </button>
+        <button class="button-link-secondary open-login">Log in</button>
+        <button class="button-link-secondary open-signup">Sign up</button>
       </div>
     </header>
     {% block content %} {% endblock %}
-    <div class="modal-overlay">
-      <div class="modal-content">This is a modal.</div>
+    <!-- Signup modal -->
+    <div id="signup-modal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close-button"><i class="fas fa-times"></i></button>
+        <p class="modal-header-title">Sign Up</p>
+        <p class="modal-header-subtitle">
+          Sign up to add comments, leave reviews, and submit your own websites!
+        </p>
+        <form method="POST" action="{{ url_for('signup') }}">
+          <div class="form-input-container">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              pattern="^[a-zA-Z0-9]{5,15}$"
+              required
+            />
+            <label for="email">Email</label>
+            <input type="email" name="email" required />
+            <label for="password">Password</label>
+            <input type="password" name="password" required />
+            <label for="repassword">Repeat Password</label>
+            <input type="password" name="repassword" required />
+          </div>
+          <div class="form-button-container">
+            <button class="button-primary large" type="submit">Sign up</button>
+            <button class="button-secondary large open-login" type="button">
+              Already have an account?
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Login modal -->
+    <div id="login-modal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close-button"><i class="fas fa-times"></i></button>
+        <p class="modal-header-title">Log In</p>
+        <p class="modal-header-subtitle">
+          Log in to add comments, leave reviews, and submit your own websites!
+        </p>
+        <form>
+          <div class="form-input-container">
+            <label for="email">Email</label>
+            <input type="email" name="email" required />
+            <label for="password">Password</label>
+            <input type="password" name="password" required />
+          </div>
+          <div class="form-button-container">
+            <button class="button-primary large" type="submit">Log in</button>
+            <button class="button-secondary large open-signup" type="button">
+              Create an account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Toast -->
+    <div class="toast-wrapper">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="toast-container {{ category }}">
+        <p>{{ message }}</p>
+        <button class="close-button" onclick="closeToast(this)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+  <script>
+    function closeToast(flash) {
+      console.log(flash.closest('.toast-container').remove());
+    }
+  </script>
 </html>
