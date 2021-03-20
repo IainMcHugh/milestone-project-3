@@ -74,7 +74,7 @@
         <p class="modal-header-subtitle">
           Log in to add comments, leave reviews, and submit your own websites!
         </p>
-        <form>
+        <form method="POST" action="{{ url_for('login') }}">
           <div class="form-input-container">
             <label for="email">Email</label>
             <input type="email" name="email" required />

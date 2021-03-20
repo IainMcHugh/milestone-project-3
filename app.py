@@ -138,9 +138,24 @@ def signup():
 
 @app.route('/login', methods=['POST'])
 def login():
-    print('login')
+    if request.method == 'POST':
+        existing_user = mongo.db.users.find_one(
+            {'email': request.form.get('email').lower()})
 
+        if existing_user:
+            if check_password_hash(
+                existing_user["password"], request.form.get('password')):
+                    session["user"] = existing_user["username"].lower()
+                    flash('Welcome ' + existing_user["username"] + ', you are now logged in', 'success')
+                    return redirect(url_for('index'))
+            else:
+                flash('Invalid email or password', 'error')
+                return redirect(url_for('index'))
+        else:
+            flash('Invalid email or password', 'error')
+            return redirect(url_for('index'))
 
+        
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
