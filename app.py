@@ -74,7 +74,7 @@ def siteDetails():
     return render_template('siteDetails.html', website=website)
 
 
-@app.route('/user')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 def user():
     # user = mongo.db.users.find()
     user = {
