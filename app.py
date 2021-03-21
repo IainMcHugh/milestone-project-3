@@ -132,6 +132,25 @@ def createSite():
     return render_template('createSite.html')
 
 
+@app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
+def updateSite(websiteid):
+    if request.method == 'POST':
+        website = mongo.db.websites.find_one_and_update(
+            {"_id": ObjectId(websiteid)},
+            { "$set": {
+            "title": request.form.get('site_name'),
+            "url": request.form.get('site_url'),
+            "owner": session["user"],
+            "description": request.form.get('site_description'),
+            }})
+        updated_website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+        flash("Your website was updated successfully", "success")
+        return render_template('siteDetails.html', website=updated_website)
+    
+    website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+    return render_template('updateSite.html', website=website)
+
+
 @app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':

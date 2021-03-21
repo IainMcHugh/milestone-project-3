@@ -29,7 +29,11 @@
             target="_blank"
             >VISIT</a
           >
-          <a class="button-link-secondary" href="#">EDIT</a>
+          <a
+            class="button-link-secondary"
+            href="{{ url_for('updateSite', websiteid=website._id) }}"
+            >EDIT</a
+          >
           <a class="button-link-secondary" href="#">DELETE</a>
         </div>
       </div>

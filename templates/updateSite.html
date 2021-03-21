@@ -3,33 +3,30 @@
   <form
     class="crud-site-form"
     method="POST"
-    action="{{ url_for('createSite') }}"
+    action="{{ url_for('updateSite', websiteid=website._id) }}"
   >
     <input
       class="input-stripped"
       type="text"
       name="site_name"
       id="site_name"
-      placeholder="Website Name"
+      value="{{ website.title }}"
     />
     <input
       class="input-stripped"
       type="text"
       name="site_url"
       id="site_url"
-      placeholder="Website URL"
+      value="{{ website.url }}"
     />
-    <textarea
-      id="comment"
-      name="site_description"
-      required
-      placeholder="Add a description for the site..."
-    ></textarea>
+    <textarea id="comment" name="site_description" required>
+{{ website.description }}</textarea
+    >
     <select name="type" id="type" aria-placeholder="Category" required>
       <option value="yes">Yes</option>
       <option value="no">No</option>
     </select>
-    <button type="submit" class="button-primary">Publish</button>
+    <button type="submit" class="button-primary">Update</button>
   </form>
 </div>
 {% endblock %}

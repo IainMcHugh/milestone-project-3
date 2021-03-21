@@ -493,26 +493,26 @@ header {
   row-gap: 8px;
 }
 
-/* Create site page */
+/* CRUD site page */
 
-.create-site-page {
+.crud-site-page {
   padding: 48px 8px;
 }
 
-.create-site-form {
+.crud-site-form {
   display: flex;
   flex-direction: column;
 }
 
-.create-site-form > input,
-.create-site-form > textarea,
-.create-site-form > select,
-.create-site-form > button {
+.crud-site-form > input,
+.crud-site-form > textarea,
+.crud-site-form > select,
+.crud-site-form > button {
   margin-bottom: 24px;
 }
 
 @media only screen and (min-width: 768px) {
-  .create-site-page {
+  .crud-site-page {
     width: 752px;
     margin: 48px auto;
   }
