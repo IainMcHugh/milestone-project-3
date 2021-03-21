@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+<div class="create-site-page">
+  <form
+    class="create-site-form"
+    method="POST"
+    action="{{ url_for('createSite') }}"
+  >
+    <input
+      class="input-stripped"
+      type="text"
+      name="site_name"
+      id="site_name"
+      placeholder="Website Name"
+    />
+    <input
+      class="input-stripped"
+      type="text"
+      name="site_url"
+      id="site_url"
+      placeholder="Website URL"
+    />
+    <textarea
+      id="comment"
+      name="site_description"
+      required
+      placeholder="Add a description for the site..."
+    ></textarea>
+    <select name="type" id="type" aria-placeholder="Category" required>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    <button type="submit" class="button-primary">Publish</button>
+  </form>
+</div>
+{% endblock %}

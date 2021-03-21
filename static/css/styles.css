@@ -371,7 +371,7 @@ header {
 
 .website-data {
   display: grid;
-  grid-template-columns: 1fr 80px 72px;
+  grid-template-columns: 1fr 120px;
   column-gap: 8px;
   align-items: center;
 }
@@ -493,6 +493,31 @@ header {
   row-gap: 8px;
 }
 
+/* Create site page */
+
+.create-site-page {
+  padding: 48px 8px;
+}
+
+.create-site-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-site-form > input,
+.create-site-form > textarea,
+.create-site-form > select,
+.create-site-form > button {
+  margin-bottom: 24px;
+}
+
+@media only screen and (min-width: 768px) {
+  .create-site-page {
+    width: 752px;
+    margin: 48px auto;
+  }
+}
+
 /* Toasts */
 
 .toast-wrapper {
@@ -512,6 +537,11 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   margin-bottom: 8px;
+  animation-name: toastAnimation;
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
 }
 
 .success {
@@ -531,8 +561,24 @@ header {
   font-size: 14px;
   line-height: 16px;
   color: var(--BLACK);
-  font-weight: 400;
+  font-weight: 300;
 }
+
+@keyframes toastAnimation {
+  0% {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  75% {
+    transform: translateX(-25px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Other */
 
 .close-button {
   flex-grow: 1;

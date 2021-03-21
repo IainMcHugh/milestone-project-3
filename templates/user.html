@@ -2,23 +2,33 @@
 <div class="user-page">
   <div class="user-heading">
     <h1>{{ username }}'s websites</h1>
-    <button class="button-primary button-large" href="url_for(add_website)">
+    <a class="button-primary button-large" href="{{ url_for('createSite') }}">
       ADD
-    </button>
+    </a>
   </div>
   <section class="website-list">
-    {% for website in username.websites %}
+    {% for website in user_websites %}
     <div class="panel small-panel">
       <div class="website-data">
-        <a class="user-website-name" href="website.url">{{ website.name }}</a>
-        <p>
+        <a
+          class="user-website-name"
+          href="{{ url_for('siteDetails', websiteid=website._id) }}"
+          >{{ website.title }}</a
+        >
+        <!-- <p>
           Owner: {% if website.isOwner: %}
           <span>Yes</span>
           {% else %}
           <span>No</span>
           {% endif %}
-        </p>
+        </p> -->
         <div class="website-data-buttons">
+          <a
+            class="button-link-secondary"
+            href="{{ website.url }}"
+            target="_blank"
+            >VISIT</a
+          >
           <a class="button-link-secondary" href="#">EDIT</a>
           <a class="button-link-secondary" href="#">DELETE</a>
         </div>

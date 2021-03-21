@@ -19,6 +19,7 @@ mongo = PyMongo(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # websites = list(mongo.db.websites.find())
     websites = {'popular': [
         {'url': 'test1', 'image': ''},
         {'url': 'test2', 'image': ''},
@@ -44,44 +45,41 @@ def index():
     return render_template('index.html', websites=websites)
 
 
-@app.route('/siteDetails')
-def siteDetails():
-    website = {
-        'owners': ['IainMcHugh'],
-        'title': 'WebApp Store',
-        'url': 'https://www.webappstore.com',
-        'description': 'This is a description of the purpose of the website and blah blah blah. This is a description of the purpose of the website and blah blah blah. This is a description of the purpose of the website and blah blah blah.',
-        'stars': 4,
-        'reviews': 100,
-        'last_update': 'This is the most recent update description.',
-        'comments': [
-            {
-                'username': 'bob_123',
-                'timestamp': '2 days ago',
-                'value': 'I really like this website!',
-                'stars': 4,
-                'comment_type': 'COMMENT',
-            },
-            {
-                'username': 'jane_456',
-                'timestamp': '3 days ago',
-                'value': 'I found this bug I think should be fixed!',
-                'stars': 3,
-                'comment_type': 'BUG',
-            },
-        ]
-    }
+@app.route('/siteDetails/<websiteid>', methods=['GET'])
+def siteDetails(websiteid):
+    print(websiteid)
+    website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
     return render_template('siteDetails.html', website=website)
+    # websitet = {
+    #     'comments': [
+    #         {
+    #             'username': 'bob_123',
+    #             'timestamp': '2 days ago',
+    #             'value': 'I really like this website!',
+    #             'stars': 4,
+    #             'comment_type': 'COMMENT',
+    #         },
+    #         {
+    #             'username': 'jane_456',
+    #             'timestamp': '3 days ago',
+    #             'value': 'I found this bug I think should be fixed!',
+    #             'stars': 3,
+    #             'comment_type': 'BUG',
+    #         },
+    #     ]
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
     if session["user"]:
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
         user_data = mongo.db.users.find_one({"username": session["user"]})
+        user_websites = []
+        for website in user_data["websites"]:
+            user_websites.append(mongo.db.websites.find_one({"_id": ObjectId(website)}))
         return render_template(
-                'user.html', username=username, user_data=user_data)
+                'user.html', username=user_data["username"],
+                user_data=user_data,
+                user_websites=user_websites)
     return redirect(url_for("index"))
     # user = {
     #     'username': 'Iain_McHugh',
@@ -108,6 +106,30 @@ def user(username):
     #     ]
     # }
     
+
+@app.route("/createSite", methods=["GET", "POST"])
+def createSite():
+    if request.method == 'POST':
+        site = {
+            "title": request.form.get('site_name'),
+            "url": request.form.get('site_url'),
+            "owner": session["user"],
+            "description": request.form.get('site_description'),
+            "stars": 0,
+            "reviews": 0,
+            "last_update": "",
+            "comments": [],
+        }
+        website = mongo.db.websites.insert_one(site)
+        mongo.db.users.find_one_and_update(
+            {'username': session["user"]},
+            { "$push": {"websites": website.inserted_id}},
+            upsert=True)
+        flash("Your website was published successfully", 'success')
+        # redirect to siteDetails with inserted_id
+        return redirect(url_for('index'))
+
+    return render_template('createSite.html')
 
 
 @app.route('/signup', methods=['POST'])
