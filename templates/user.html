@@ -1,13 +1,13 @@
 {% extends "base.html" %} {% block content %}
 <div class="user-page">
   <div class="user-heading">
-    <h1>{{ user.username }}'s websites</h1>
+    <h1>{{ username }}'s websites</h1>
     <button class="button-primary button-large" href="url_for(add_website)">
       ADD
     </button>
   </div>
   <section class="website-list">
-    {% for website in user.websites %}
+    {% for website in username.websites %}
     <div class="panel small-panel">
       <div class="website-data">
         <a class="user-website-name" href="website.url">{{ website.name }}</a>

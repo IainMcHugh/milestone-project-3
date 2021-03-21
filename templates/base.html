@@ -26,11 +26,30 @@
   <body>
     <header>
       <div id="logo-container">LOGO</div>
-      <!-- <div id="header-logged-in">User</div> -->
-      <div id="header-logged-out">
-        <button class="button-link-secondary open-login">Log in</button>
-        <button class="button-link-secondary open-signup">Sign up</button>
+
+      {% if session.user %}
+      <div class="header-options">
+        <a
+          href="{{ url_for('user', username=session['user']) }}"
+          class="button-link-secondary button-large"
+          >User page</a
+        >
+        <a
+          href="{{ url_for('logout') }}"
+          class="button-link-secondary button-large"
+          >Log out</a
+        >
       </div>
+      {% else %}
+      <div class="header-options">
+        <button class="button-link-secondary button-large open-login">
+          Log in
+        </button>
+        <button class="button-link-secondary button-large open-signup">
+          Sign up
+        </button>
+      </div>
+      {% endif %}
     </header>
     {% block content %} {% endblock %}
     <!-- Signup modal -->

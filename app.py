@@ -75,34 +75,39 @@ def siteDetails():
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
-def user():
-    # user = mongo.db.users.find()
-    user = {
-        'username': 'Iain_McHugh',
-        'email': 'iamchugh@tcd.ie',
-        'websites': [
-            {
-                'id': '123456',
-                'name': 'My website',
-                'url': 'https://www.google.com',
-                'isOwner': True
-            },
-            {
-                'id': '123456',
-                'name': 'My second website',
-                'url': 'https://www.google.com',
-                'isOwner': True
-            },
-            {
-                'id': '123456',
-                'name': 'My third website',
-                'url': 'https://www.google.com',
-                'isOwner': False
-            },
-        ]
-    }
-    return render_template('user.html', user=user)
-
+def user(username):
+    if session["user"]:
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+        user_data = mongo.db.users.find_one({"username": session["user"]})
+        return render_template(
+                'user.html', username=username, user_data=user_data)
+    return redirect(url_for("index"))
+    # user = {
+    #     'username': 'Iain_McHugh',
+    #     'email': 'iamchugh@tcd.ie',
+    #     'websites': [
+    #         {
+    #             'id': '123456',
+    #             'name': 'My website',
+    #             'url': 'https://www.google.com',
+    #             'isOwner': True
+    #         },
+    #         {
+    #             'id': '123456',
+    #             'name': 'My second website',
+    #             'url': 'https://www.google.com',
+    #             'isOwner': True
+    #         },
+    #         {
+    #             'id': '123456',
+    #             'name': 'My third website',
+    #             'url': 'https://www.google.com',
+    #             'isOwner': False
+    #         },
+    #     ]
+    # }
+    
 
 
 @app.route('/signup', methods=['POST'])
@@ -127,13 +132,15 @@ def signup():
         register = {
             "username": request.form.get('username').lower(),
             "email": request.form.get('email').lower(),
-            "password": generate_password_hash(request.form.get('password').lower()),
+            "password": generate_password_hash(
+                request.form.get('password').lower()),
         }
         mongo.db.users.insert_one(register)
 
         session["user"] = request.form.get('username').lower()
-        flash('Welcome ' + request.form.get('username') + ', you are now logged in', 'success')
-        return redirect(url_for('index'))
+        flash('Welcome ' + request.form.get('username') + 
+        ', you are now logged in', 'success')
+        return redirect(url_for('user', username=session["user"]))
 
 
 @app.route('/login', methods=['POST'])
@@ -147,7 +154,7 @@ def login():
                 existing_user["password"], request.form.get('password')):
                     session["user"] = existing_user["username"].lower()
                     flash('Welcome ' + existing_user["username"] + ', you are now logged in', 'success')
-                    return redirect(url_for('index'))
+                    return redirect(url_for('user', username=session["user"]))
             else:
                 flash('Invalid email or password', 'error')
                 return redirect(url_for('index'))
@@ -155,7 +162,14 @@ def login():
             flash('Invalid email or password', 'error')
             return redirect(url_for('index'))
 
-        
+
+@app.route("/logout")
+def logout():
+    flash("You have successfully been logged out", "success")
+    session.pop("user")
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
