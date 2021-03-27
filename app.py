@@ -127,7 +127,7 @@ def createSite():
             upsert=True)
         flash("Your website was published successfully", 'success')
         # redirect to siteDetails with inserted_id
-        return redirect(url_for('index'))
+        return redirect(url_for('user', username=session['user']))
 
     return render_template('createSite.html')
 
@@ -149,6 +149,18 @@ def updateSite(websiteid):
     
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
     return render_template('updateSite.html', website=website)
+
+
+@app.route('/deleteSite/<websiteid>')
+def deleteSite(websiteid):
+    # need to delete from websites and user website list
+    mongo.db.users.find_one_and_update(
+            {'username': session["user"]},
+            { "$pull": {"websites": ObjectId(websiteid)}},
+            upsert=True)
+    mongo.db.websites.remove({"_id": ObjectId(websiteid)})
+    flash('Website was successfully removed', 'success')
+    return redirect(url_for('user', username=session['user']))
 
 
 @app.route('/signup', methods=['POST'])

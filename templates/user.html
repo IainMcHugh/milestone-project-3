@@ -34,7 +34,11 @@
             href="{{ url_for('updateSite', websiteid=website._id) }}"
             >EDIT</a
           >
-          <a class="button-link-secondary" href="#">DELETE</a>
+          <a
+            class="button-link-secondary"
+            href="{{ url_for('deleteSite', websiteid=website._id) }}"
+            >DELETE</a
+          >
         </div>
       </div>
     </div>
