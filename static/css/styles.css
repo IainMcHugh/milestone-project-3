@@ -23,6 +23,10 @@ body {
 /* Header */
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 80px;
   background-color: var(--GREY_DARK);
   display: flex;
@@ -34,7 +38,7 @@ header {
 }
 
 .logo-link {
-  color: var(--BLUE);
+  color: var(--BLACK);
   text-decoration: none;
   height: 100%;
 }
@@ -43,7 +47,7 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--WHITE);
+  background: linear-gradient(to right, var(--BLUE), var(--GREY_DARK));
   padding: 8px;
   padding-right: 16px;
   font-size: 16px;
@@ -81,6 +85,10 @@ header {
   margin-right: 0;
 }
 
+main {
+  margin-top: 80px;
+}
+
 .button-link-secondary {
   font-size: 12px;
   line-height: 16px;
@@ -102,7 +110,7 @@ header {
 /* home page */
 
 .home-page {
-  margin: 56px 16px;
+  padding: 56px 16px;
 }
 
 .suggest-container {
@@ -146,7 +154,7 @@ header {
 
 @media only screen and (min-width: 768px) {
   .home-page {
-    margin: 48px 16px;
+    padding: 48px 16px;
   }
 
   .suggest-container {

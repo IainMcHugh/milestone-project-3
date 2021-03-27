@@ -40,7 +40,7 @@
         <a
           href="{{ url_for('user', username=session['user']) }}"
           class="button-link-secondary button-large"
-          >User page</a
+          >{{ session['user'] }}</a
         >
         <a
           href="{{ url_for('logout') }}"
@@ -59,7 +59,7 @@
       </div>
       {% endif %}
     </header>
-    {% block content %} {% endblock %}
+    <main>{% block content %} {% endblock %}</main>
     <!-- Signup modal -->
     <div id="signup-modal" class="modal-overlay">
       <div class="modal-content">

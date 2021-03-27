@@ -42,7 +42,9 @@
         </div>
       </div>
     </div>
-    {% endfor %}
+    {% endfor %} {% if not user_websites%}
+    <p>No websites associated with this account.</p>
+    {% endif %}
   </section>
 </div>
 {% endblock %}
