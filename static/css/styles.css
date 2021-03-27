@@ -385,6 +385,14 @@ main {
     background-color: var(--GREY_DARKER);
     border-radius: 4px;
     cursor: pointer;
+    width: 347px;
+    height: 111px;
+  }
+
+  .panel-right > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .stat-container {

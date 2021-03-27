@@ -49,3 +49,7 @@ Credits
 - Star icon: https://fontawesome.com/
 - delete flash message: https://stackoverflow.com/questions/57660542/flask-closing-flash-message
 - bounce effect on logo: https://stackoverflow.com/questions/29786230/how-to-create-css3-bounce-effect
+
+Sample upload cloudinary
+
+- cloudinary.uploader.upload("sample.jpg",crop="limit",tags="samples",width=3000,height=2000)

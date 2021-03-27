@@ -16,7 +16,9 @@
           <p>{{ website.reviews}} reviews</p>
         </div>
       </div>
-      <div class="panel-right"></div>
+      <div class="panel-right">
+        <img src="{{ website.image }}" />
+      </div>
     </div>
     <div class="recent-update">
       {% if website.last_update%}

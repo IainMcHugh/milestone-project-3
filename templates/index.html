@@ -5,9 +5,9 @@
     <div class="suggest-card-container">
       {% for website in websites.popular %}
       <div class="card">
-        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'
-          >{{ website.image }}</a
-        >
+        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
+          <img src="{{ website.image }}" />
+        </a>
       </div>
       {% endfor %}
     </div>
@@ -17,9 +17,9 @@
     <div class="suggest-card-container">
       {% for website in websites.recent %}
       <div class="card">
-        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'
-          >{{ website.image }}</a
-        >
+        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
+          <img src="{{ website.image }}" />
+        </a>
       </div>
       {% endfor %}
     </div>
@@ -29,9 +29,9 @@
     <div class="suggest-card-container">
       {% for website in websites.random %}
       <div class="card">
-        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'
-          >{{ website.image }}</a
-        >
+        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
+          <img src="{{ website.image }}" />
+        </a>
       </div>
       {% endfor %}
     </div>

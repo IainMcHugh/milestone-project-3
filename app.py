@@ -2,6 +2,8 @@ import os
 from flask import (
     Flask, flash, render_template, redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+import cloudinary as Cloud
+from cloudinary.uploader import upload
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists('env.py'):
@@ -15,6 +17,12 @@ app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 app.secret_key = os.environ.get('SECRET_KEY')
 
 mongo = PyMongo(app)
+
+Cloud.config.update = ({
+    'cloud_name': os.environ.get('CLOUD_NAME'),
+    'api_key': os.environ.get('CLOUD_KEY'),
+    'api_secret': os.environ.get('CLOUD_SECRET')
+})
 
 
 @app.route('/')
@@ -57,9 +65,6 @@ def index():
         'recent': websites_recent,
         'random': websites_random
     }
-    print(websites_popular)
-    print(websites_recent)
-    print(websites_random)
     return render_template('index.html', websites=websites)
 
 
@@ -79,7 +84,6 @@ def user(username):
             for website in user_data["websites"]:
                 user_websites.append(mongo.db.websites.find_one(
                     {"_id": ObjectId(website)}))
-                print(user_websites)
 
         if not user_websites:
             flash(
@@ -94,6 +98,18 @@ def user(username):
 @app.route("/createSite", methods=["GET", "POST"])
 def createSite():
     if request.method == 'POST':
+        # Get image and post to cloudinary
+        file = request.files['site_img']
+        # upload to cloudinary
+        cloudinary_response = upload(
+            file,
+            folder="webapp_store/site_images/",
+            public_id=request.form.get('site_name'),
+            overwrite=True,
+            resource_type='image')
+
+        print(cloudinary_response)
+        print(cloudinary_response["url"])
         site = {
             "title": request.form.get('site_name'),
             "url": request.form.get('site_url'),
@@ -102,6 +118,7 @@ def createSite():
             "stars": 0,
             "reviews": 0,
             "last_update": "",
+            "image": cloudinary_response["url"],
             "comments": [],
         }
         website = mongo.db.websites.insert_one(site)
