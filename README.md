@@ -49,6 +49,9 @@ Credits
 - Star icon: https://fontawesome.com/
 - delete flash message: https://stackoverflow.com/questions/57660542/flask-closing-flash-message
 - bounce effect on logo: https://stackoverflow.com/questions/29786230/how-to-create-css3-bounce-effect
+- Cloud docs: https://cloudinary.com/documentation/image_upload_api_reference#sample_response
+  https://cloudinary.com/documentation/django_integration
+  https://github.com/tiagocordeiro/flask-cloudinary
 
 Sample upload cloudinary
 

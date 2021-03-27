@@ -6,7 +6,10 @@
       {% for website in websites.popular %}
       <div class="card">
         <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
-          <img src="{{ website.image }}" />
+          <div class="card-image_container">
+            <img src="{{ website.image }}" />
+            <p>{{ website.title }}</p>
+          </div>
         </a>
       </div>
       {% endfor %}
@@ -18,7 +21,10 @@
       {% for website in websites.recent %}
       <div class="card">
         <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
-          <img src="{{ website.image }}" />
+          <div class="card-image_container">
+            <img src="{{ website.image }}" />
+            <p>{{ website.title }}</p>
+          </div>
         </a>
       </div>
       {% endfor %}
@@ -30,7 +36,10 @@
       {% for website in websites.random %}
       <div class="card">
         <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
-          <img src="{{ website.image }}" />
+          <div class="card-image_container">
+            <img src="{{ website.image }}" />
+            <p>{{ website.title }}</p>
+          </div>
         </a>
       </div>
       {% endfor %}
