@@ -11,6 +11,8 @@
       name="site_name"
       id="site_name"
       placeholder="Website Name"
+      maxlength="30"
+      autocomplete="off"
     />
     <input
       class="input-stripped"
@@ -18,6 +20,7 @@
       name="site_url"
       id="site_url"
       placeholder="Website URL"
+      autocomplete="url"
     />
     <textarea
       id="comment"
@@ -25,11 +28,12 @@
       required
       placeholder="Add a description for the site..."
     ></textarea>
+    <!-- Come back to this -->
     <select name="type" id="type" aria-placeholder="Category" required>
       <option value="yes">Yes</option>
       <option value="no">No</option>
     </select>
-    <button type="submit" class="button-primary">Publish</button>
+    <button type="submit" class="button-primary crud-submit">Publish</button>
   </form>
 </div>
 {% endblock %}

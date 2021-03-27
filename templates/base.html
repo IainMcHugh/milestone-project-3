@@ -29,8 +29,11 @@
   </head>
   <body>
     <header>
-      <a href="{{ url_for('index')}}">
-        <div id="logo-container">LOGO</div>
+      <a class="logo-link" href="{{ url_for('index')}}">
+        <div id="logo-container">
+          <img src="{{ url_for('static', filename='images/favicon.ico') }}" />
+          WebApp Store
+        </div>
       </a>
       {% if session.user %}
       <div class="header-options">

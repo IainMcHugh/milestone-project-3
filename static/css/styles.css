@@ -5,6 +5,7 @@
   --GREY_DARKER: #c4c4c4;
   --BLUE: #11bdf3;
   --BLUE_LIGHT: #71b7d0cc;
+  --BLUE_BRIGHT: #49d5ff;
   --GREEN_LIGHT: #71d0a0cc;
   --RED_LIGHT: #d07171cc;
   --WHITE: white;
@@ -32,12 +33,39 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
+.logo-link {
+  color: var(--BLUE);
+  text-decoration: none;
+  height: 100%;
+}
+
 #logo-container {
-  background-color: var(--BLUE);
-  padding: 16px 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--WHITE);
+  padding: 8px;
+  padding-right: 16px;
   font-size: 16px;
   line-height: 16px;
   border-radius: 2px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 64px;
+}
+
+#logo-container > img {
+  height: 30px;
+  width: 30px;
+  margin-right: 8px;
+  transition: all 300ms;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#logo-container:hover > img {
+  -webkit-transform: rotate(10deg) scale3d(0.8, 0.8, 0.8);
+  transform: scale3d(0.8);
 }
 
 .header-options {
@@ -61,6 +89,14 @@ header {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition: opacity 200ms ease-in-out;
+}
+
+@media only screen and (min-width: 768px) {
+  #logo-container > img {
+    height: 100%;
+    width: auto;
+  }
 }
 
 /* home page */
@@ -242,6 +278,18 @@ header {
   border: 0;
   border-radius: 2px;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
+  text-decoration: none;
+}
+
+.button-primary:hover,
+.button-secondary:hover {
+  background-color: var(--BLUE_BRIGHT);
+}
+
+.button-link-secondary:hover {
+  color: var(--BLUE_BRIGHT);
+  font-weight: 300;
 }
 
 .button-secondary {
@@ -254,6 +302,7 @@ header {
   border-radius: 2px;
   border: 1px solid var(--BLUE);
   cursor: pointer;
+  transition: opacity 200ms ease-in-out;
 }
 
 .comment-container {
@@ -511,10 +560,53 @@ header {
   margin-bottom: 24px;
 }
 
+#site_name {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 200;
+}
+
+#site_url {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 200;
+  color: var(--BLUE);
+}
+
+.input-stripped {
+  border: none;
+}
+
+.input-stripped:focus {
+  border: none;
+  outline: none;
+}
+
+.crud-submit {
+  align-self: flex-end;
+}
+
 @media only screen and (min-width: 768px) {
   .crud-site-page {
     width: 752px;
     margin: 48px auto;
+  }
+
+  .crud-site-form > input,
+  .crud-site-form > textarea,
+  .crud-site-form > select,
+  .crud-site-form > button {
+    margin-bottom: 48px;
+  }
+
+  #site_name {
+    font-size: 36px;
+    line-height: 36px;
+  }
+
+  #site_url {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
