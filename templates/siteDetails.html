@@ -16,9 +16,9 @@
           <p>{{ website.reviews}} reviews</p>
         </div>
       </div>
-      <div class="panel-right">
+      <a href="{{ website.url }}" target="_blank" class="panel-right">
         <img src="{{ website.image }}" />
-      </div>
+      </a>
     </div>
     <div class="recent-update">
       {% if website.last_update%}
@@ -28,25 +28,42 @@
     </div>
   </section>
   <section class="panel">
-    <form id="comment-form" onSubmit="(e) => e.preventDefault()">
-      <!-- Make post request to website comments + update UI with comment -->
+    <form
+      id="comment-form"
+      method="POST"
+      action="{{ url_for('siteDetails', websiteid=website._id) }}"
+    >
       <label id="comment-label" for="comment">Comments</label>
       <textarea id="comment" name="site-description" required></textarea>
       <div class="form-submit">
+        <label id="stars-label" for="site-stars">Rating</label>
+        <input
+          name="site-stars"
+          id="site-stars"
+          type="range"
+          min="0"
+          max="5"
+          class="star-slider"
+          required
+        />
         <select name="type" id="type" aria-placeholder="Category" required>
           <option value="">Category</option>
           <option value="comment">Comment</option>
           <option value="bug">Bug</option>
+          {% if website.owner == session.user %}
           <option value="update">Update</option>
+          {% endif %}
         </select>
         <button class="button-primary" type="submit">Comment</button>
       </div>
     </form>
-    {% for comment in website.comments %}
-    <div class="comment-container">
+    {% for comment in website.comments|sort(attribute='timestamp', reverse=true)
+    %}
+    <div class="comment-container cmt-type-{{ comment.comment_type }}">
       <div class="comment-heading-container">
         <p class="comment-name">{{comment.username}}</p>
         <div class="comment-data">
+          {% if comment.stars %}
           <div class="comment-stars">
             <div class="star-container">
               {% for star in range(comment.stars) %}
@@ -56,7 +73,10 @@
               {% endfor %}
             </div>
           </div>
-          <div class="comment-time">{{ comment.timestamp }}</div>
+          {% endif %}
+          <div class="comment-time">
+            at {{ comment.timestamp.strftime("%m/%d/%Y, %H:%M:%S") }}
+          </div>
         </div>
       </div>
       <p class="comment-value">{{ comment.value }}</p>

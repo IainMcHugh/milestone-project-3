@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import (
     Flask, flash, render_template, redirect, request, session, url_for)
 from flask_pymongo import PyMongo
@@ -68,14 +69,63 @@ def index():
     return render_template('index.html', websites=websites)
 
 
-@app.route('/siteDetails/<websiteid>', methods=['GET'])
+@app.route('/siteDetails/<websiteid>', methods=['GET', 'POST'])
 def siteDetails(websiteid):
-    print(websiteid)
+
+    if request.method == 'POST':
+        # its a comment post
+        if request.form.get('type') == 'comment':
+            comment = {
+                'username': session['user'],
+                'timestamp': datetime.now(),
+                'stars': int(request.form.get('site-stars')),
+                'value': request.form.get('site-description'),
+                'comment_type': request.form.get('type')
+            }
+            website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+            reviews = website["reviews"]
+            stars = website["stars"]
+            new_reviews = reviews + 1
+            new_stars = int(
+                (stars + int(request.form.get('site-stars')))/(reviews + 1))
+            mongo.db.websites.find_one_and_update(
+                {"_id": ObjectId(websiteid)},
+                {"$push": {"comments": comment},
+                 "$set": {"reviews": new_reviews, "stars": new_stars}},
+                upsert=True)
+        elif request.form.get('type') == 'update':
+            comment = {
+                'username': session['user'],
+                'timestamp': datetime.now(),
+                'value': request.form.get('site-description'),
+                'comment_type': request.form.get('type')
+            }
+            mongo.db.websites.find_one_and_update(
+                {"_id": ObjectId(websiteid)},
+                {"$push": {"comments": comment},
+                 "$set": {"last_update": request.form.get('site-description')}},
+                upsert=True)
+        else:
+            comment = {
+                'username': session['user'],
+                'timestamp': datetime.now(),
+                'value': request.form.get('site-description'),
+                'comment_type': request.form.get('type')
+            }
+            mongo.db.websites.find_one_and_update(
+                {"_id": ObjectId(websiteid)},
+                {"$push": {"comments": comment}},
+                upsert=True)
+        flash('Commented successfully', 'success')
+        # website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+        return redirect(url_for('siteDetails', websiteid=websiteid))
+        # (new_star)/total
+
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
     return render_template('siteDetails.html', website=website)
 
 
-@app.route('/user/<username>', methods=['GET', 'POST'])
+@ app.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
     if session["user"]:
         user_data = mongo.db.users.find_one({"username": session["user"]})
@@ -95,7 +145,7 @@ def user(username):
     return redirect(url_for("index"))
 
 
-@app.route("/createSite", methods=["GET", "POST"])
+@ app.route("/createSite", methods=["GET", "POST"])
 def createSite():
     if request.method == 'POST':
         # Get image and post to cloudinary
@@ -133,7 +183,7 @@ def createSite():
     return render_template('createSite.html')
 
 
-@app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
+@ app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
 def updateSite(websiteid):
     if request.method == 'POST':
         website = mongo.db.websites.find_one_and_update(
@@ -153,7 +203,7 @@ def updateSite(websiteid):
     return render_template('updateSite.html', website=website)
 
 
-@app.route('/deleteSite/<websiteid>')
+@ app.route('/deleteSite/<websiteid>')
 def deleteSite(websiteid):
     # need to delete from websites and user website list
     mongo.db.users.find_one_and_update(
@@ -165,7 +215,7 @@ def deleteSite(websiteid):
     return redirect(url_for('user', username=session['user']))
 
 
-@app.route('/signup', methods=['POST'])
+@ app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':
         pwd = request.form.get('password')
@@ -198,7 +248,7 @@ def signup():
         return redirect(url_for('user', username=session["user"]))
 
 
-@app.route('/login', methods=['POST'])
+@ app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         existing_user = mongo.db.users.find_one(
@@ -219,11 +269,30 @@ def login():
             return redirect(url_for('index'))
 
 
-@app.route("/logout")
+@ app.route("/logout")
 def logout():
     flash("You have successfully been logged out", "success")
     session.pop("user")
     return redirect(url_for('index'))
+
+
+# @app.route('/postComment/<websiteid>')
+# def postComment(websiteid):
+#     comment = {
+#         'username': session['user'],
+#         'timestamp': datetime.now(),
+#         'value': request.form.get('site-description'),
+#         'comment_type': request.form.get('type')
+#     }
+#     print(comment)
+#     mongo.db.websites.find_one_and_update(
+#         {"_id": ObjectId(websiteid)},
+#         {"$push": {"comments": comment}},
+#         upsert=True)
+#     flash('Commented successfully', 'success')
+#     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+#     return redirect(url_for('siteDetails.html', website=website))
+    # return render_template('siteDetails.html', website=website)
 
 
 if __name__ == '__main__':

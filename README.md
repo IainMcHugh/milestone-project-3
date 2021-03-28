@@ -52,7 +52,10 @@ Credits
 - Cloud docs: https://cloudinary.com/documentation/image_upload_api_reference#sample_response
   https://cloudinary.com/documentation/django_integration
   https://github.com/tiagocordeiro/flask-cloudinary
+- Slider: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_rangeslider
+- Sorting in Jinja templating: https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
 
 Sample upload cloudinary
 
 - cloudinary.uploader.upload("sample.jpg",crop="limit",tags="samples",width=3000,height=2000)
+- To start: CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py
