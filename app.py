@@ -4,7 +4,7 @@ from flask import (
     Flask, flash, render_template, redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 import cloudinary as Cloud
-from cloudinary.uploader import upload
+from cloudinary.uploader import upload, destroy
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists('env.py'):
@@ -169,6 +169,7 @@ def createSite():
             "reviews": 0,
             "last_update": "",
             "image": cloudinary_response["url"],
+            "image_id": cloudinary_response["public_id"],
             "comments": [],
         }
         website = mongo.db.websites.insert_one(site)
@@ -210,7 +211,10 @@ def deleteSite(websiteid):
         {'username': session["user"]},
         {"$pull": {"websites": ObjectId(websiteid)}},
         upsert=True)
+    website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
+    destroy(website["image_id"])
     mongo.db.websites.remove({"_id": ObjectId(websiteid)})
+    # delete associated cloudinary image
     flash('Website was successfully removed', 'success')
     return redirect(url_for('user', username=session['user']))
 
