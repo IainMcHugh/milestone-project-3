@@ -48,7 +48,12 @@
           >Log out</a
         >
       </div>
-      {% else %}
+      {% if request.url_rule.endpoint != "createSite" %}<a
+        id="header-add"
+        class="button-primary button-large"
+        href="{{ url_for('createSite') }}"
+        >ADD</a
+      >{% endif %} {% else %}
       <div class="header-options">
         <button class="button-link-secondary button-large open-login">
           Log in
