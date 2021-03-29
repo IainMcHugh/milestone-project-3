@@ -14,6 +14,7 @@
       placeholder="Website Name"
       maxlength="30"
       autocomplete="off"
+      required
     />
     <input
       class="input-stripped"
@@ -22,12 +23,13 @@
       id="site_url"
       placeholder="Website URL"
       autocomplete="url"
+      required
     />
     <textarea
       id="comment"
       name="site_description"
-      required
       placeholder="Add a description for the site..."
+      required
     ></textarea>
     <label for="site_img">Select image:</label>
     <input
@@ -37,11 +39,6 @@
       accept="image/*"
       required
     />
-    <!-- Come back to this -->
-    <!-- <select name="type" id="type" aria-placeholder="Category" required>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select> -->
     <button type="submit" class="button-primary crud-submit">Publish</button>
   </form>
 </div>

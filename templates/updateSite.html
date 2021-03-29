@@ -11,6 +11,7 @@
       name="site_name"
       id="site_name"
       value="{{ website.title }}"
+      required
     />
     <input
       class="input-stripped"
@@ -18,14 +19,11 @@
       name="site_url"
       id="site_url"
       value="{{ website.url }}"
+      required
     />
     <textarea id="comment" name="site_description" required>
 {{ website.description }}</textarea
     >
-    <!-- <select name="type" id="type" aria-placeholder="Category" required>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select> -->
     <button type="submit" class="button-primary crud-submit">Update</button>
   </form>
 </div>
