@@ -35,8 +35,14 @@
           WebApp Store
         </div>
       </a>
-      {% if session.user %}
       <div class="header-options">
+        <a
+          class="button-link-secondary button-large"
+          href="{{ url_for('index')}}"
+        >
+          Home
+        </a>
+        {% if session.user %}
         <a
           href="{{ url_for('user', username=session['user']) }}"
           class="button-link-secondary button-large"
@@ -51,18 +57,16 @@
           class="button-primary button-large"
           href="{{ url_for('createSite') }}"
           >ADD</a
-        >{% endif %}
-      </div>
-      {% else %}
-      <div class="header-options">
+        >{% endif %} {% else %}
         <button class="button-link-secondary button-large open-login">
           Log in
         </button>
         <button class="button-link-secondary button-large open-signup">
           Sign up
         </button>
+        {% endif %}
       </div>
-      {% endif %}
+
       <div class="header-options-mobile">
         {% if session.user and request.url_rule.endpoint != "createSite" %}<a
           class="button-primary button-large"
@@ -77,6 +81,12 @@
     <div class="mobile-menu">
       <button class="close-button"><i class="fas fa-times"></i></button>
       <div class="mobile-menu-container">
+        <a
+          class="mobile-menu-btn button-link-secondary button-large"
+          href="{{ url_for('index')}}"
+        >
+          Home
+        </a>
         {% if session.user %}
         <a
           href="{{ url_for('user', username=session['user']) }}"
@@ -89,16 +99,16 @@
           >Log out</a
         >
         {% else %}
-        <button
+        <a
           class="mobile-menu-btn button-link-secondary button-large open-login"
         >
           Log in
-        </button>
-        <button
+        </a>
+        <a
           class="mobile-menu-btn button-link-secondary button-large open-signup"
         >
           Sign up
-        </button>
+        </a>
         {% endif %}
       </div>
     </div>
