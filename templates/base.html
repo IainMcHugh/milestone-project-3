@@ -47,13 +47,13 @@
           class="button-link-secondary button-large"
           >Log out</a
         >
+        {% if request.url_rule.endpoint != "createSite" %}<a
+          class="button-primary button-large"
+          href="{{ url_for('createSite') }}"
+          >ADD</a
+        >{% endif %}
       </div>
-      {% if request.url_rule.endpoint != "createSite" %}<a
-        id="header-add"
-        class="button-primary button-large"
-        href="{{ url_for('createSite') }}"
-        >ADD</a
-      >{% endif %} {% else %}
+      {% else %}
       <div class="header-options">
         <button class="button-link-secondary button-large open-login">
           Log in
@@ -63,12 +63,49 @@
         </button>
       </div>
       {% endif %}
+      <div class="header-options-mobile">
+        {% if session.user and request.url_rule.endpoint != "createSite" %}<a
+          class="button-primary button-large"
+          href="{{ url_for('createSite') }}"
+          >ADD</a
+        >{% endif %}
+        <button class="hamburger-button"><i class="fas fa-bars"></i></button>
+      </div>
     </header>
     <main>{% block content %} {% endblock %}</main>
+    <!-- Mobile side menu -->
+    <div class="mobile-menu">
+      <button class="close-button"><i class="fas fa-times"></i></button>
+      <div class="mobile-menu-container">
+        {% if session.user %}
+        <a
+          href="{{ url_for('user', username=session['user']) }}"
+          class="mobile-menu-btn button-link-secondary button-large"
+          >{{ session['user'] }}</a
+        >
+        <a
+          href="{{ url_for('logout') }}"
+          class="mobile-menu-btn button-link-secondary button-large"
+          >Log out</a
+        >
+        {% else %}
+        <button
+          class="mobile-menu-btn button-link-secondary button-large open-login"
+        >
+          Log in
+        </button>
+        <button
+          class="mobile-menu-btn button-link-secondary button-large open-signup"
+        >
+          Sign up
+        </button>
+        {% endif %}
+      </div>
+    </div>
     <!-- Signup modal -->
     <div id="signup-modal" class="modal-overlay">
       <div class="modal-content">
-        <button class="modal-close-button"><i class="fas fa-times"></i></button>
+        <button class="close-button"><i class="fas fa-times"></i></button>
         <p class="modal-header-title">Sign Up</p>
         <p class="modal-header-subtitle">
           Sign up to add comments, leave reviews, and submit your own websites!
@@ -101,7 +138,7 @@
     <!-- Login modal -->
     <div id="login-modal" class="modal-overlay">
       <div class="modal-content">
-        <button class="modal-close-button"><i class="fas fa-times"></i></button>
+        <button class="close-button"><i class="fas fa-times"></i></button>
         <p class="modal-header-title">Log In</p>
         <p class="modal-header-subtitle">
           Log in to add comments, leave reviews, and submit your own websites!
@@ -128,7 +165,7 @@
       messages %} {% for category, message in messages %}
       <div class="toast-container {{ category }}">
         <p>{{ message }}</p>
-        <button class="close-button" onclick="closeToast(this)">
+        <button class="toast-close-button" onclick="closeToast(this)">
           <i class="fas fa-times"></i>
         </button>
       </div>

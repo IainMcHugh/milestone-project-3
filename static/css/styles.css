@@ -74,8 +74,7 @@ header {
 }
 
 .header-options {
-  display: flex;
-  align-items: center;
+  display: none;
 }
 
 .header-options > a,
@@ -87,10 +86,64 @@ header {
   margin-right: 0;
 }
 
-#header-add {
+.header-options-mobile {
+  display: flex;
+  align-items: center;
+}
+
+.header-options-mobile > * {
+  margin-right: 16px;
+}
+
+.header-options-mobile:last-child {
+  margin-right: 0;
+}
+
+.hamburger-button {
+  border: none;
+  background-color: transparent;
+}
+
+.mobile-menu {
+  display: none;
   position: absolute;
-  top: 100px;
-  right: 16px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--BLUE);
+  z-index: 9900;
+  animation-name: mobileMenu;
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  box-shadow: -8px 0 8px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@keyframes mobileMenu {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80vw;
+  }
+}
+
+.mobile-menu-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu-btn {
+  color: var(--WHITE) !important;
+  font-size: 24px !important;
+  line-height: 24px !important;
+  margin-bottom: 24px !important;
+  font-weight: 200 !important;
+  text-align: left;
 }
 
 main {
@@ -109,6 +162,15 @@ main {
 }
 
 @media only screen and (min-width: 768px) {
+  .header-options {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-options-mobile {
+    display: none;
+  }
+
   #logo-container > img {
     height: 100%;
     width: auto;
@@ -589,7 +651,7 @@ main {
   border-radius: 4px;
 }
 
-.modal-close-button {
+.close-button {
   font-size: 24px;
   position: absolute;
   top: 16px;
@@ -599,7 +661,7 @@ main {
   cursor: pointer;
 }
 
-.modal-close-button:focus {
+.close-button:focus {
   outline: none;
 }
 
@@ -775,7 +837,7 @@ main {
 
 /* Other */
 
-.close-button {
+.toast-close-button {
   flex-grow: 1;
   align-self: flex-start;
   background-color: transparent;

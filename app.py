@@ -138,7 +138,9 @@ def createSite():
             folder="webapp_store/site_images/",
             public_id=request.form.get('site_name'),
             overwrite=True,
-            resource_type='image')
+            resource_type='image',
+            transformation=[{'width': 640}]
+        )
         site = {
             "title": request.form.get('site_name'),
             "url": request.form.get('site_url'),
