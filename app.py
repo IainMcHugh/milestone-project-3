@@ -130,6 +130,12 @@ def user(username):
 @app.route("/createSite", methods=["GET", "POST"])
 def createSite():
     if request.method == 'POST':
+        # Check if website url is already in use
+        existing_website = mongo.db.websites.find_one(
+            {"url": request.form.get('site_url')})
+        if existing_website:
+            flash("Website with this url already exists.", 'error')
+            return render_template('createSite.html')
         # Get image and post to cloudinary
         file = request.files['site_img']
         # upload to cloudinary
@@ -166,9 +172,20 @@ def createSite():
     return render_template('createSite.html')
 
 
-@app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
+@ app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
 def updateSite(websiteid):
     if request.method == 'POST':
+        existing_website = mongo.db.websites.find_one(
+            {"$and": [
+                {"url": request.form.get('site_url')},
+                {"_id": {
+                    "$ne": ObjectId(websiteid)
+                }}
+            ]})
+        print(existing_website)
+        if existing_website:
+            flash("Website with this url already exists.", 'error')
+            return render_template('createSite.html')
         website = mongo.db.websites.find_one_and_update(
             {"_id": ObjectId(websiteid)},
             {"$set": {
@@ -186,7 +203,7 @@ def updateSite(websiteid):
     return render_template('updateSite.html', website=website)
 
 
-@app.route('/deleteSite/<websiteid>')
+@ app.route('/deleteSite/<websiteid>')
 def deleteSite(websiteid):
     # need to delete from websites and user website list
     mongo.db.users.find_one_and_update(
@@ -201,7 +218,7 @@ def deleteSite(websiteid):
     return redirect(url_for('user', username=session['user']))
 
 
-@app.route('/signup', methods=['POST'])
+@ app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':
         pwd = request.form.get('password')
@@ -234,7 +251,7 @@ def signup():
         return redirect(url_for('user', username=session["user"]))
 
 
-@app.route('/login', methods=['POST'])
+@ app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         existing_user = mongo.db.users.find_one(
@@ -255,7 +272,7 @@ def login():
             return redirect(url_for('index'))
 
 
-@app.route("/logout")
+@ app.route("/logout")
 def logout():
     flash("You have successfully been logged out", "success")
     session.pop("user")
