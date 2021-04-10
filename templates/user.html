@@ -2,13 +2,15 @@
 <div class="user-page">
   <div class="user-heading">
     <h1>{{ username }}'s websites</h1>
-    <!-- <a class="button-primary button-large" href="{{ url_for('createSite') }}">
-      ADD
-    </a> -->
   </div>
   <section class="website-list">
     {% for website in user_websites %}
     <div class="panel small-panel">
+      <a href="{{ url_for('siteDetails', websiteid=website._id) }}">
+        <div class="user-card-image">
+          <img src="{{ website.image }}" />
+        </div>
+      </a>
       <div class="website-data">
         <a
           class="user-website-name"

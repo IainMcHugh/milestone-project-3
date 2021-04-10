@@ -182,7 +182,6 @@ def updateSite(websiteid):
                     "$ne": ObjectId(websiteid)
                 }}
             ]})
-        print(existing_website)
         if existing_website:
             flash("Website with this url already exists.", 'error')
             return render_template('createSite.html')
