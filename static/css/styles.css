@@ -146,8 +146,19 @@ header {
   text-align: left;
 }
 
+.search-container {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 main {
-  margin-top: 80px;
+  margin-top: 168px;
 }
 
 .button-link-secondary {
