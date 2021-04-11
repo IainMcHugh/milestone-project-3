@@ -171,6 +171,9 @@ hr {
 input,
 select {
   vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 button:focus {

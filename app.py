@@ -46,6 +46,18 @@ def index():
     return render_template('index.html', websites=websites)
 
 
+@app.route('/search', methods=["GET", 'POST'])
+def search():
+    query = request.form.get('query')
+    websites_search = list(mongo.db.websites.find(
+        {"$text": {"$search": query}}))
+    websites = {
+        'search': websites_search,
+        'searched': True
+    }
+    return render_template('index.html', websites=websites)
+
+
 @app.route('/siteDetails/<websiteid>', methods=['GET', 'POST'])
 def siteDetails(websiteid):
 

@@ -76,12 +76,24 @@
         <button class="hamburger-button"><i class="fas fa-bars"></i></button>
       </div>
     </header>
+    {% if request.url_rule.endpoint == "index" or request.url_rule.endpoint ==
+    "search" %}
     <div class="search-container">
-      <form>
-        <input name="search" id="search" type="text" placeholder="Search..." />
-        <button type="submit">Search</button>
+      <form class="search-form" action="{{ url_for('search') }}" method="POST">
+        <input
+          name="query"
+          id="query"
+          class="search-input"
+          type="text"
+          placeholder="Search..."
+          required
+        />
+        <button id="search-submit-btn" type="submit">
+          <i class="fas fa-search white-text"></i>
+        </button>
       </form>
     </div>
+    {% endif %}
     <main>{% block content %} {% endblock %}</main>
     <!-- Mobile side menu -->
     <div class="mobile-menu">
