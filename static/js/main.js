@@ -4,14 +4,23 @@ $(document).ready(() => {
   });
 
   $('.open-signup').on('click', () => {
-    $('#login-modal').css('display', 'none');
     $('#signup-modal').css('display', 'flex');
+    $('#login-modal').css('display', 'none');
     $('.mobile-menu').css('display', 'none');
+    $('#info-modal').css('display', 'none');
   });
 
   $('.open-login').on('click', () => {
-    $('#signup-modal').css('display', 'none');
     $('#login-modal').css('display', 'flex');
+    $('#signup-modal').css('display', 'none');
+    $('.mobile-menu').css('display', 'none');
+    $('#info-modal').css('display', 'none');
+  });
+
+  $('.open-info').on('click', () => {
+    $('#info-modal').css('display', 'flex');
+    $('#signup-modal').css('display', 'none');
+    $('#login-modal').css('display', 'none');
     $('.mobile-menu').css('display', 'none');
   });
 
@@ -19,5 +28,6 @@ $(document).ready(() => {
     $('#signup-modal').css('display', 'none');
     $('#login-modal').css('display', 'none');
     $('.mobile-menu').css('display', 'none');
+    $('#info-modal').css('display', 'none');
   });
 });

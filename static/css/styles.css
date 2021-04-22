@@ -545,7 +545,8 @@ main {
 /* Modal */
 
 #signup-modal,
-#login-modal {
+#login-modal,
+#info-modal {
   display: none;
 }
 
