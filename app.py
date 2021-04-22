@@ -28,13 +28,22 @@ Cloud.config.update = ({
 
 @app.route('/')
 def index():
-    # get popular websites
+    """Home page
+    * Retreives the websites from the database in 3 different ways:
+
+    1. Sorted by stars in descending order
+    2. Sorted by _id in descending order (this sorts by timestamp)
+    3. Takes a random sample of 5 websites and returns
+
+    * These arrays populate an object and are returned.
+    """
+
     websites_popular = [
         x for x in mongo.db.websites.find().sort("stars", -1).limit(5)]
-    # get recently added websites
+
     websites_recent = [
         x for x in mongo.db.websites.find().sort("_id", -1).limit(5)]
-    # get random websites
+
     websites_random = [x for x in mongo.db.websites.aggregate(
         [{"$sample": {"size": 5}}]
     )]
@@ -48,6 +57,16 @@ def index():
 
 @app.route('/search', methods=["GET", 'POST'])
 def search():
+    """ Searching:
+    * Retreives the search query the user typed
+        and use it to search the database.
+
+    * User can search by website name or URL.
+
+    * Return result as an object, appending boolean True,
+        as the page this to reformat the layout.
+
+    """
     query = request.form.get('query')
     websites_search = list(mongo.db.websites.find(
         {"$text": {"$search": query}}))
@@ -60,9 +79,29 @@ def search():
 
 @app.route('/siteDetails/<websiteid>', methods=['GET', 'POST'])
 def siteDetails(websiteid):
+    """ Website page:
+    GET: Builds the website page that the user sees when they click on a website.
 
+    POST: Handles a user posting a comment on the website page.
+
+    Args:
+    1.  websiteid (str): The objectId associated with the MongoDB document
+        for that specific website.
+
+    Returns:
+    *   POST: comment object is constructed, and based on the 3 comment variations
+        available this is what happens:
+        1.  COMMENT: star rating is retrieved from comment and website's rating is updated
+            accordingly. Comment object is constructed and appended to comments array for
+            that website's MongoDB document.
+        2.  UPDATE: Previous update comment is replaced with this. Comment object is constructed
+            and appended to comments array for that website's MongoDB document.
+        3.  BUG: Comment object is constructed and appended to comments array for
+            that website's MongoDB document.
+
+    *   GET: The information contained in the MongoDB website document.
+    """
     if request.method == 'POST':
-        # its a comment post
         if "user" in session:
             if request.form.get('type') == 'comment':
                 comment = {
@@ -121,6 +160,16 @@ def siteDetails(websiteid):
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
+    """ User page:
+    *   If there is a user logged in, builds the user page 
+        from that User's MongoDB document.
+
+    Args:
+    1.  username (str): The user's username.
+
+    Returns:
+    *   The username, user's data and any website's the user has added.
+    """
     if session["user"]:
         user_data = mongo.db.users.find_one({"username": session["user"]})
         user_websites = []
@@ -141,16 +190,24 @@ def user(username):
 
 @app.route("/createSite", methods=["GET", "POST"])
 def createSite():
+    """ Adding a site page:
+    *   GET: Returns the create site page template
+
+    *   POST: Constructs a MongoDB website document, and updates both
+        the website collection, as well as the user's document with this
+        website.
+    *   The added image associated with the website (required) is uploaded
+        to cloudinary, and the url and id in the cloudinary response is stored
+        against the website's document for later retreival.
+
+    """
     if request.method == 'POST':
-        # Check if website url is already in use
         existing_website = mongo.db.websites.find_one(
             {"url": request.form.get('site_url')})
         if existing_website:
             flash("Website with this url already exists.", 'error')
             return render_template('createSite.html')
-        # Get image and post to cloudinary
         file = request.files['site_img']
-        # upload to cloudinary
         cloudinary_response = upload(
             file,
             folder="webapp_store/site_images/",
@@ -178,7 +235,6 @@ def createSite():
             {"$push": {"websites": website.inserted_id}},
             upsert=True)
         flash("Your website was published successfully", 'success')
-        # redirect to siteDetails with inserted_id
         return redirect(url_for('user', username=session['user']))
 
     return render_template('createSite.html')
@@ -186,6 +242,18 @@ def createSite():
 
 @ app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
 def updateSite(websiteid):
+    """ Update your site page:
+    *   GET: Returns the update site page template
+
+    *   POST: Updates the website's MongoDB document with new information
+
+    Args:
+    1.  websiteid (str): The associated website id.
+
+    Returns:
+    *   When successfully updated, it renders the site details page with
+        updated information.
+    """
     if request.method == 'POST':
         existing_website = mongo.db.websites.find_one(
             {"$and": [
