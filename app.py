@@ -37,7 +37,6 @@ def index():
 
     * These arrays populate an object and are returned.
     """
-
     websites_popular = [
         x for x in mongo.db.websites.find().sort("stars", -1).limit(5)]
 
@@ -52,6 +51,7 @@ def index():
         'recent': websites_recent,
         'random': websites_random
     }
+
     return render_template('index.html', websites=websites)
 
 
@@ -74,6 +74,7 @@ def search():
         'search': websites_search,
         'searched': True
     }
+
     return render_template('index.html', websites=websites)
 
 
@@ -127,6 +128,7 @@ def siteDetails(websiteid):
                     {"$push": {"comments": comment},
                      "$set": {"reviews": new_reviews, "stars": new_stars, "stars_total": new_stars_total}},
                     upsert=True)
+
             elif request.form.get('type') == 'update':
                 comment = {
                     'username': session['user'],
@@ -139,6 +141,7 @@ def siteDetails(websiteid):
                     {"$push": {"comments": comment},
                      "$set": {"last_update": request.form.get('site-description')}},
                     upsert=True)
+
             else:
                 comment = {
                     'username': session['user'],
@@ -151,9 +154,12 @@ def siteDetails(websiteid):
                     {"$push": {"comments": comment}},
                     upsert=True)
             flash('Commented successfully', 'success')
+
         else:
             flash('You need to be logged in to add a comment', 'info')
+
         return redirect(url_for('siteDetails', websiteid=websiteid))
+
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
     return render_template('siteDetails.html', website=website)
 
@@ -173,6 +179,7 @@ def user(username):
     if session["user"]:
         user_data = mongo.db.users.find_one({"username": session["user"]})
         user_websites = []
+
         if "websites" in user_data:
             for website in user_data["websites"]:
                 user_websites.append(mongo.db.websites.find_one(
@@ -181,6 +188,7 @@ def user(username):
         if not user_websites:
             flash(
                 'Click the "ADD" button to publish your first website!', 'info')
+
         return render_template(
             'user.html', username=user_data["username"],
             user_data=user_data,
@@ -204,9 +212,11 @@ def createSite():
     if request.method == 'POST':
         existing_website = mongo.db.websites.find_one(
             {"url": request.form.get('site_url')})
+
         if existing_website:
             flash("Website with this url already exists.", 'error')
             return render_template('createSite.html')
+
         file = request.files['site_img']
         cloudinary_response = upload(
             file,
@@ -234,13 +244,14 @@ def createSite():
             {'username': session["user"]},
             {"$push": {"websites": website.inserted_id}},
             upsert=True)
+
         flash("Your website was published successfully", 'success')
         return redirect(url_for('user', username=session['user']))
 
     return render_template('createSite.html')
 
 
-@ app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
+@app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
 def updateSite(websiteid):
     """ Update your site page:
     *   GET: Returns the update site page template
@@ -265,6 +276,7 @@ def updateSite(websiteid):
         if existing_website:
             flash("Website with this url already exists.", 'error')
             return render_template('createSite.html')
+
         website = mongo.db.websites.find_one_and_update(
             {"_id": ObjectId(websiteid)},
             {"$set": {
@@ -282,23 +294,44 @@ def updateSite(websiteid):
     return render_template('updateSite.html', website=website)
 
 
-@ app.route('/deleteSite/<websiteid>')
+@app.route('/deleteSite/<websiteid>')
 def deleteSite(websiteid):
-    # need to delete from websites and user website list
+    """ Delete site route
+    *   Deletes the website from the database
+
+    Args:
+    1.  websiteid (str): The website id
+
+    Returns:
+    *   Removes the website document as well as reference to website in user's
+        array of websites. Also removes the website's image from cloudinary.
+    """
     mongo.db.users.find_one_and_update(
         {'username': session["user"]},
         {"$pull": {"websites": ObjectId(websiteid)}},
         upsert=True)
+
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
     destroy(website["image_id"])
     mongo.db.websites.remove({"_id": ObjectId(websiteid)})
-    # delete associated cloudinary image
+
     flash('Website was successfully removed', 'success')
     return redirect(url_for('user', username=session['user']))
 
 
-@ app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
+    """ Sign up route
+    *   The passwords entered are checked to validate they match, and
+        it is checked that username and email are not already taken,
+        before creating a new user document in the Users collection.
+
+    *   The user's password is hashed for security purposes.
+
+    Return:
+    *   Redirected to user page
+
+    """
     if request.method == 'POST':
         pwd = request.form.get('password')
         re_pwd = request.form.get('repassword')
@@ -330,8 +363,21 @@ def signup():
         return redirect(url_for('user', username=session["user"]))
 
 
-@ app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
+    """ Log in route
+    *   If the user's email matches that of a user in the Users collection, it
+        is then checked that the hashed passwords match.
+
+    Returns:
+    *   If successful login, the user is redirected to their User page
+    *   If password does not match or email is not found, we give the same error message
+        and redirect to home page.
+
+    Return:
+    *   Redirected to user page
+
+    """
     if request.method == 'POST':
         existing_user = mongo.db.users.find_one(
             {'email': request.form.get('email').lower()})
@@ -351,8 +397,14 @@ def login():
             return redirect(url_for('index'))
 
 
-@ app.route("/logout")
+@app.route("/logout")
 def logout():
+    """ Log out route
+    *   If user clicks logout, we simple pop the user cookie from the session array.
+
+    Returns:
+    *   Redirects to the home page
+    """
     flash("You have successfully been logged out", "success")
     session.pop("user")
     return redirect(url_for('index'))
