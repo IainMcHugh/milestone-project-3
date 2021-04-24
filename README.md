@@ -2,11 +2,9 @@
 
 [View the live project here.](https://web-app-store.herokuapp.com/)
 
-![Rubber Ducking](https://github.com/IainMcHugh/ms2/blob/master/assets/images/mockup.png?raw=true)
+![Rubber Ducking](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/mockup.png?raw=true)
 
 Welcome to the Website App Store! The inspiration for this website came from the idea of bridging mobile apps and websites. Websites are generally viewed by consumers as functional products with apps being more appreciated for their visuals, whereas we know that websites, like apps, have huge focuses on aesthetics and visuals and we want to represent this. Feel free to browse the website's here like candy in a shop! If you've created your own website, make sure to make an account and add it to the collection here. You must include a screenshot and you can link to your site from here.
-
-![Video Demo](https://github.com/IainMcHugh/ms2/blob/master/assets/images/readme-video.gif?raw=true)
 
 ## User Experience (UX)
 
@@ -18,8 +16,8 @@ Welcome to the Website App Store! The inspiration for this website came from the
     2. As a site visitor, I want to be able to have a single place that I can leave feedback and report bugs on websites I use.
     3. As a site visitor, I want to be able to view websites categorised by user ratings.
     4. As a site visitor, I want to be able to read release notes for updates to websites that I use continuously.
-    5. As a website creator, I want a simply way to communicate to my userbase on updates they can make use of to my website.
-    6. As a website creator, I want an easy way for users to leave feedback on my website without needing dedicated submission forms.
+    5. As a website creator, I want to be able to update information on website as it changes over time.
+    6. As a website creator, I want to be able to delete a website entry if the website no longer exists.
 
 - ### Design
   - #### Colour Scheme
@@ -50,19 +48,17 @@ Welcome to the Website App Store! The inspiration for this website came from the
 
 ## Features
 
-- Multiple layouts to accomodate various screen sizes
+- Responsive layout for all screen sizes
 
-- Fully functional messaging application
+- Authentication with both logging in and registering
 
-- Message responses being generated from 3rd party API responses
+- The ability to create, update, and delete sites.
 
-- Dark mode toggle
+- Information modal for overview of the sites purpose.
 
-- Information modal for overview of available functionality
+- Fully functional commenting with bug reporting, ratings, and most recent maintenance updates.
 
-- Downloadble chat history in JSON format through the use of local storage
-
-- Custom 404 error page handling
+- 3rd party image hosting (image deleted on site removal for maximum efficiency)
 
 ## Technologies Used
 
@@ -71,6 +67,7 @@ Welcome to the Website App Store! The inspiration for this website came from the
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
 - [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
 - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+- [Python](https://en.wikipedia.org/wiki/Python)
 
 ### Frameworks, Libraries & Programs Used
 
@@ -83,7 +80,7 @@ Welcome to the Website App Store! The inspiration for this website came from the
 4. [GitHub:](https://github.com/)
    - GitHub is used to store the projects code after being pushed from Git.
 5. [Photoshop:](https://www.adobe.com/ie/products/photoshop.html)
-   - Photoshop was used to create the logo, resizing images and editing photos for the website.
+   - Photoshop was used to edit the logo, resizing images and editing photos for the website.
 6. [Figma:](https://figma.com/)
    - Figma was used to create the [wireframes](https://github.com/) during the design process.
 7. [Visual Studio Code:](https://visualstudio.com/)
@@ -93,35 +90,40 @@ Welcome to the Website App Store! The inspiration for this website came from the
 
 The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of the project to ensure there were no syntax errors in the project.
 
-- [W3C Markup Validator](https://validator.w3.org/) - [Results](https://validator.w3.org/nu/?doc=https%3A%2F%2Fiainmchugh.github.io%2Fms2%2F)
-- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input) - [Results](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fiainmchugh.github.io%2Fms2%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
-  (Note: The following error may show `Property backdrop-filter doesn't exist : blur(2px)`, however this is a valid css property that is available in up to date versions of most modern browsers - see [caniuse backdrop-filter](https://caniuse.com/?search=backdrop-filter))
+- [W3C Markup Validator](https://validator.w3.org/) - PASS (NOTE: I had to test each HTML section manually as the validator can not handle Jinja templating)
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input) - [Results](https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fweb-app-store.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+  (Note:
+  - The following error may show `Property backdrop-filter doesn't exist : blur(4px)`, however this is a valid css property that is available in up to date versions of most modern browsers - see [caniuse backdrop-filter](https://caniuse.com/?search=backdrop-filter)
+  - You may also see warnings with regards to CSS color variables I used, again these are valid and available in up to date versions of all modern browsers - see [caniuse css-variables](https://caniuse.com/css-variables))
 
 ### Testing User Stories from User Experience (UX) Section
 
 - #### Site Visitor Goals
 
-  1. As a site Visitor, I want a clear understanding of the purpose of this particular website.
+  1. As a site visitor, I want to be able to browse websites by topic instead of what best matches my search query on a search engine.
 
-     1. When the user clicks the start button, they are presented with a messaging interface which is straight forward to interact with.
+     1. When a user visits the WebAppStore, they are presented with carousels of images of websites where they can choose based on how a site looks.
 
-  2. As a site Visitor, I want a smooth experience when using the website.
+  2. As a site visitor, I want to be able to have a single place that I can leave feedback and report bugs on websites I use.
 
-     1. As the main screen is rendered entirely with javascript, after the initial loading bar has completed the client-side nature of the site means all interactions will be almost instantenous.
-     2. Attention has been given to using consistent padding and margins throughout the site, while aiming to acheive symmetry where possible
+     1. Users can click onto or search for any website that has been added to the WebAppStore, and can leave multiple comments against that website.
+     2. The user can also report any bugs found in the comments section, and these are distinguished by a red left border.
 
-  3. As a site Visitor, I want to be able to get the same experience no matter what device I am using.
+  3. As a site visitor, I want to be able to view websites categorised by user ratings.
 
-     1. The website has a fully responsive design, on mobile the message panel takes up the entire screen so it has the feel of a normal messaging app, with miniature versions of the functional buttons within the header. On larger screens the site is split into two columns, where the left is predominantly for typing and the right for clicking.
+     1. One of the 3 sections of the homepage is a 'Most popular' carousel of websites available on the site. This displays websites by order of star rating in descending order, so users can see the most popular sites.
 
-  4. As a site Visitor, I want clarity on the functionality available within the site.
+  4. As a site visitor, I want to be able to read release notes for updates to websites that I use continuously.
 
-     1. When the main page first loads, the user is provided with two staggered information messages from the duck. These give a quick rundown on the main functionality available to the user.
-     2. An information modal has also been created, to further explain in detail to the user the various options available to them and how they work, as well as a general overview of the sites purpose.
+     1. Website creators can simply add their own websites to their profile, which are then public. As the website owner they have the unique ability to add an 'Update' comment. This comment is distinguished by a green left border, and the most recent update by the website owner is displayed in the top panel for a website page.
 
-  5. As a site Visitor, I want the website pathway to be obvious to me so I know how to fully utilise the site.
+  5. As a website creator, I want to be able to update information on website as it changes over time.
 
-     1. When the user has finished their session, they can click the green button to open the success modal. From here they have the option of either completing their session, or to download the chat logs. In both cases this will reset the message panel.
+     1. On a users page, they can see a list of their websites they have added. There is an option to edit an existing website. Here they can update the name, URL, and description of the site. Clicking the update button will automatically redirect them to the updated website details page.
+
+  6. As a website creator, I want to be able to delete a website entry if the website no longer exists.
+
+     1. On a users page, they can see a list of their websites they have added. Along with the ability to edit an existing website, there is also an option to delete. If they choose to delete, then the website is removed, and can no longer be accessed.
 
 ### Further Testing
 
@@ -129,32 +131,33 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 - The website was viewed on a variety of devices such as Desktop, Laptop, iPhone7, iPhone 8 & iPhoneX.
 - A large amount of testing was done to ensure that all pages were linking correctly.
 - Friends and family members were asked to review the site and documentation to point out any bugs and/or user experience issues.
+- Multiple accounts were created and all of the sites functionality was tested, from CRUD operations to star rating system.
 
-### Jasmine Unit Testing
+### Testing
 
-- Jasmine unit tests were written to test two functions involved in storing the message logs in local storage. In order to test this functionality, the main local storage method calls were spyed on and there functionality mocked. Before each test local storage is essentially reset to remove test contamination. The first test describes calling the update chat history, where a mock message is passed to the function and the set item call is spyed on. (Note: This test is flaky as part of the object being tested involves a live timestamp, in order to fix this I would look for a way to mock the timestamp). The second test describes the download chat history method, where a href ready string should be returned to the download anchor tag on the success modal. For this test the local storage is mocked with two message logs, and the format of the returned string is tested.
+-
 
 ### Known Bugs
 
-- There is an issue where if enough messages have been sent that the message panel becomes scrollable, a new message being sent will not be immediately visible as the user will need to scroll down to see this. To fix this I would create a function that will scroll to the bottom of any scrollable container element that it is passed, and then call this function on each message being sent.
+- When creating the search index I wanted users to be able to search by website as well as copying and pasting website URLs into the search bar for searching. While the search by name is working a s intended, searching by website URL returns all websites. This is most likely due to all URLs having very similar structures and with no spaces can be quite hard to get an accurate search result. To fix this I would investigate further the options available when creating a MongoDB search query, and possibly use a regex filter on the URL before performing the search query.
 
-- I tested the functionality of various messaging apps to find a workable solution for the message input box. The solution I have to recreate this behaviour stemmed from a useful stackoverflow post (mentioned in credits), where a sufficient amount of text being entered causes an overflow scroll to kick in. However, there is an issue where the text area does not resize to it's original dimensions after clearing when a message is sent. I would try to fix this by implementing changes at the point after a message is sent and the text area is cleared.
+- The ratings bar on a website details page functions perfectly, however I found it extremely difficult to customize the range input to match my designs. While I could have found a not so elegant way to cheat this issue with CSS, I felt it would maximise SEO by sticking to a ranged input slider. The ratings bar always displays, even though it's value is only captured when the user is leaving a comment. I would fix this by adding an event listener to the dropdown and use css to hide it when the option is not Comment.
 
-- I had always thought it would be a cool feature to download the message history but upon researching I found without a node like setup it would be difficult as it requires access to the device's OS. A workaround was to encode the messages directly into the href of an achor tag, however the best solution I could get to work for this introduces extra escape characters. I enjoyed working on this part as I learned about encoding URI components but would require further investigation as to how to clean up the JSON file downloaded.
+- While I added comprehensive checks to make sure duplicate websites can not be added (URL and site name must be unique in the database), technically users can add subdirectory pages of an existing website and they will be added. This is a hard fix as some websites are so large that subdirectories warrant their own page on WebAppStore.
 
 ## Future Features
 
-- Use caching to restore a users active messages for the scenario where they clost the tab and reopen at a later point in time.
+- Verification over site ownership so the true site owner is the only one that can leave updates on a website.
 
-- Add more text input features, such as bold, italic, underline, as well as embedding links or having coding snippets (for users working out a coding problem).
+- The ability for bug reports to notify the site owner. I would use a mailing service such as EmailJS here.
 
-- Set up a backend to store a users previous sessions, so they could have a listing of all previous discussions from within the site instead of having to download and storing locally.
+- More categories on the homepage for greater versatility.
 
-- Add unit tests as well as end-to-end testing with jest testing library to further my confidence in the overall site reliability.
-
-- I would like to add a toast that fires when the user has completed their session, as well as when they have completed downloading the message logs.
+- Tags associated with websites, which would greatly help with further categorization of websites.
 
 ## Deployment
+
+- To start: CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py
 
 ### GitHub Pages
 
@@ -202,65 +205,14 @@ $ git clone git@github.com:IainMcHugh/milestone-project-2.git
 
 Click [Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to retrieve pictures for some of the buttons and more detailed explanations of the above process.
 
-### Running tests
+### Database Structure
 
-In order to run Jasmine tests, simply open the `SpecRunner.html` file in Google Chrome, and the tests will run automatically.
-
-## Credits
-
-### Code
-
-- [CSS scollbar](https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar): This helped me a lot when trying to customise the scrollbar within the text area on the message panel, which was a vital requirement within the design.
-
-- [Article by Valentino Gagliardi](https://www.valentinog.com/blog/link-download/): This extremely helpful method allowed me to embed the entire JSON chat logs within an anchor tag's href attribute, making it downloadable by the user.
-
-### Content
-
-- All content was written by Iain McHugh.
-
-- [Rubber Duck Debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging) While researching the idea I came across this article where I learnt a similar feature used to exist on stackoverflow! This gave me further inspiration to push ahead with the idea.
-
-- [Multi-mockup](https://techsini.com/multi-mockup/): A great resource for generating mockup displays for the site on various different screens and devices. Used for the cover photo of this readme file.
-
-- [Mocking localStorage](https://stackoverflow.com/questions/11485420/how-to-mock-localstorage-in-javascript-unit-tests): This stackoverflow post helped me to mock local storage within my testing spec file.
-
-### Media
-
-- All images were created/edited by the developer or sourced from image websites where Creative Commons license is active.
-
-- [Site for icons](https://www.flaticon.com/)
-- [The Rubber Duck image source](https://www.pngegg.com/en/png-zmwpv)
-
-### API
-
-- [Quotes](https://quotes.rest/): This is the open API I used to generate random quotes.
-
-- [8ballAPI](https://8ball.delegator.com/): This is the open API I used to generate eight ball like responses to a users question.
-
-### Testing
-
-- [Jasmine](https://cdnjs.com/libraries/jasmine): Inspired by the course content, I learned how to include, create, and run tests to complement my JavaScript functions to further my confidence in their ability to perform as expected on site.
-
-### Acknowledgements
-
-- I would like to thank my mentor, Oluwafemi. With each mentoring session I feel I am learning more and more about how to approach web projects, and much of this is down to your guidance. I definitely feel that following your advice has allowed me to acheive a high quality in my projects thus far.
-
-- I also want to thank Code Institute in providing me with information and guides on how to structure my project. There is always new things for me to learn with JavaScript and I have loved every minute of the course content.
-
-- Again I would like to thank the Slack community associated with Code Institute. It is a great way to find inspiration and feel as part of a community who share a similar mindset and goal.
-
-note: in env.py change key
+I used TypeScript to create the structures for how I wanted my MongoDB documents and collections to be formed. I would greatly recommend this as it helped my mentally map what I would need to create each page. Here are the structures I used:
 
 ```typescript
 type UserWebsite = {
     website_id: websiteObjectId();
     isOwner: boolean;
-}
-
-interface Users {
-  username: string;
-  email: string;
-  websites: UserWebsite[]
 }
 
 type Comments = {
@@ -269,6 +221,12 @@ type Comments = {
   value: string;
   comment_type: 'COMMENT' | 'BUG' | 'UPDATE';
 };
+
+interface Users {
+  username: string;
+  email: string;
+  websites: UserWebsite[]
+}
 
 interface Websites {
   objectId: objectId();
@@ -283,7 +241,19 @@ interface Websites {
 }
 ```
 
-Credits
+## Credits
+
+### Code
+
+- [CSS scollbar](https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar): This helped me a lot when trying to customise the scrollbar within the text area on the message panel, which was a vital requirement within the design.
+
+- [Article by Valentino Gagliardi](https://www.valentinog.com/blog/link-download/): This extremely helpful method allowed me to embed the entire JSON chat logs within an anchor tag's href attribute, making it downloadable by the user.
+
+### Content
+
+- All content was written by Iain McHugh.
+
+- [Multi-mockup](https://techsini.com/multi-mockup/): A great resource for generating mockup displays for the site on various different screens and devices. Used for the cover photo of this readme file.
 
 - Star icon: https://fontawesome.com/
 - delete flash message: https://stackoverflow.com/questions/57660542/flask-closing-flash-message
@@ -294,10 +264,30 @@ Credits
 - Slider: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_rangeslider
 - Sorting in Jinja templating: https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
 
-Sample upload cloudinary
+### Media
 
-- cloudinary.uploader.upload("sample.jpg",crop="limit",tags="samples",width=3000,height=2000)
-- To start: CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py
+- All images were created/edited by the developer or sourced from image websites where Creative Commons license is active.
+
+- [Site for icons](https://www.flaticon.com/)
+- [The Rubber Duck image source](https://www.pngegg.com/en/png-zmwpv)
+
+### Testing
+
+-
+
+### Acknowledgements
+
+- I would like to thank my mentor, Oluwafemi. With each mentoring session I feel I am learning more and more about how to approach web projects, and much of this is down to your guidance. I definitely feel that following your advice has allowed me to acheive a high quality in my projects thus far.
+
+- I also want to thank Code Institute in providing me with information and guides on how to structure my project. There is always new things for me to learn with JavaScript and I have loved every minute of the course content.
+
+- Again I would like to thank the Slack community associated with Code Institute. It is a great way to find inspiration and feel as part of a community who share a similar mindset and goal.
+
+note: in env.py change key
+
+MY NOTES (DELETE AFTER)
+
+Sample upload cloudinary
 
 Sample Data:
 
