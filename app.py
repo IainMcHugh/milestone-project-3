@@ -55,8 +55,8 @@ def index():
     return render_template('index.html', websites=websites)
 
 
-@app.route('/search', methods=["GET", 'POST'])
-def search():
+@app.route('/store', methods=["GET"])
+def store():
     """ Searching:
     * Retreives the search query the user typed
         and use it to search the database.
@@ -67,18 +67,22 @@ def search():
         as the page this to reformat the layout.
 
     """
-    query = request.form.get('query')
-    websites_search = list(mongo.db.websites.find(
-        {"$text": {"$search": query}}))
+    query = request.args.get('query')
+    if query:
+        websites_search = list(mongo.db.websites.find(
+            {"$text": {"$search": query}}))
+    else:
+        websites_search = list(mongo.db.websites.find())
+
     websites = {
         'search': websites_search,
         'searched': True
     }
 
-    return render_template('index.html', websites=websites)
+    return render_template('store.html', websites=websites)
 
 
-@app.route('/siteDetails/<websiteid>', methods=['GET', 'POST'])
+@app.route('/site_details/<websiteid>', methods=['GET', 'POST'])
 def siteDetails(websiteid):
     """ Website page:
     GET: Builds the website page that the user sees when they click on a website.
@@ -161,7 +165,7 @@ def siteDetails(websiteid):
         return redirect(url_for('siteDetails', websiteid=websiteid))
 
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
-    return render_template('siteDetails.html', website=website)
+    return render_template('site_details.html', website=website)
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
@@ -196,7 +200,7 @@ def user(username):
     return redirect(url_for("index"))
 
 
-@app.route("/createSite", methods=["GET", "POST"])
+@app.route("/create_site", methods=["GET", "POST"])
 def createSite():
     """ Adding a site page:
     *   GET: Returns the create site page template
@@ -215,7 +219,7 @@ def createSite():
 
         if existing_website:
             flash("Website with this url already exists.", 'error')
-            return render_template('createSite.html')
+            return render_template('create_site.html')
 
         file = request.files['site_img']
         cloudinary_response = upload(
@@ -248,10 +252,10 @@ def createSite():
         flash("Your website was published successfully", 'success')
         return redirect(url_for('user', username=session['user']))
 
-    return render_template('createSite.html')
+    return render_template('create_site.html')
 
 
-@app.route('/updateSite/<websiteid>', methods=['GET', 'POST'])
+@app.route('/update_site/<websiteid>', methods=['GET', 'POST'])
 def updateSite(websiteid):
     """ Update your site page:
     *   GET: Returns the update site page template
@@ -275,7 +279,7 @@ def updateSite(websiteid):
             ]})
         if existing_website:
             flash("Website with this url already exists.", 'error')
-            return render_template('createSite.html')
+            return render_template('create_site.html')
 
         website = mongo.db.websites.find_one_and_update(
             {"_id": ObjectId(websiteid)},
@@ -291,7 +295,7 @@ def updateSite(websiteid):
         return render_template('siteDetails.html', website=updated_website)
 
     website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
-    return render_template('updateSite.html', website=website)
+    return render_template('update_site.html', website=website)
 
 
 @app.route('/deleteSite/<websiteid>')

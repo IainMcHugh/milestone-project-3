@@ -66,6 +66,12 @@
         </button>
         {% endif %}
         <a class="button-link-secondary button-large open-info"> Info </a>
+        <a
+          class="button-link-secondary button-large open-info"
+          href="{{ url_for('store') }}"
+        >
+          Store
+        </a>
       </div>
 
       <div class="header-options-mobile">
@@ -80,7 +86,7 @@
     {% if request.url_rule.endpoint == "index" or request.url_rule.endpoint ==
     "search" %}
     <div class="search-container">
-      <form class="search-form" action="{{ url_for('search') }}" method="POST">
+      <form class="search-form" action="{{ url_for('store') }}" method="GET">
         <input
           name="query"
           id="query"

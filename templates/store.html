@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %}
+<section class="home-page">
+  <div class="suggest-container">
+    {% if websites.searched %} {% if websites.search %}
+    <h2>Search Results</h2>
+    <div class="suggest-card-container">
+      {% for website in websites.search %}
+      <div class="card">
+        <a href='{{ url_for("siteDetails", websiteid=website._id) }}'>
+          <div class="card-image_container">
+            <img src="{{ website.image }}" />
+            <p>{{ website.title }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <h2>Search Results</h2>
+    <h4>No results found</h4>
+    {% endif %} 
+  {% endif %}
+</section>
+{% endblock %}
