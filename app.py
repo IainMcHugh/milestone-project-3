@@ -213,46 +213,49 @@ def createSite():
         against the website's document for later retreival.
 
     """
-    if request.method == 'POST':
-        existing_website = mongo.db.websites.find_one(
-            {"url": request.form.get('site_url')})
+    if session['user']:
+        if request.method == 'POST':
+            existing_website = mongo.db.websites.find_one(
+                {"url": request.form.get('site_url')})
 
-        if existing_website:
-            flash("Website with this url already exists.", 'error')
-            return render_template('create_site.html')
+            if existing_website:
+                flash("Website with this url already exists.", 'error')
+                return render_template('create_site.html')
 
-        file = request.files['site_img']
-        cloudinary_response = upload(
-            file,
-            folder="webapp_store/site_images/",
-            public_id=request.form.get('site_name'),
-            overwrite=True,
-            resource_type='image',
-            transformation=[{'width': 640}]
-        )
-        site = {
-            "title": request.form.get('site_name'),
-            "url": request.form.get('site_url'),
-            "owner": session["user"],
-            "description": request.form.get('site_description'),
-            "stars": 0,
-            "reviews": 0,
-            "stars_total": 0,
-            "last_update": "",
-            "image": cloudinary_response["url"],
-            "image_id": cloudinary_response["public_id"],
-            "comments": [],
-        }
-        website = mongo.db.websites.insert_one(site)
-        mongo.db.users.find_one_and_update(
-            {'username': session["user"]},
-            {"$push": {"websites": website.inserted_id}},
-            upsert=True)
+            file = request.files['site_img']
+            cloudinary_response = upload(
+                file,
+                folder="webapp_store/site_images/",
+                public_id=request.form.get('site_name'),
+                overwrite=True,
+                resource_type='image',
+                transformation=[{'width': 640}]
+            )
+            site = {
+                "title": request.form.get('site_name'),
+                "url": request.form.get('site_url'),
+                "owner": session["user"],
+                "description": request.form.get('site_description'),
+                "stars": 0,
+                "reviews": 0,
+                "stars_total": 0,
+                "last_update": "",
+                "image": cloudinary_response["url"],
+                "image_id": cloudinary_response["public_id"],
+                "comments": [],
+            }
+            website = mongo.db.websites.insert_one(site)
+            mongo.db.users.find_one_and_update(
+                {'username': session["user"]},
+                {"$push": {"websites": website.inserted_id}},
+                upsert=True)
 
-        flash("Your website was published successfully", 'success')
-        return redirect(url_for('user', username=session['user']))
+            flash("Your website was published successfully", 'success')
+            return redirect(url_for('user', username=session['user']))
 
-    return render_template('create_site.html')
+        return render_template('create_site.html')
+    else:
+        return redirect(url_for('index'))
 
 
 @app.route('/update_site/<websiteid>', methods=['GET', 'POST'])
@@ -412,6 +415,12 @@ def logout():
     flash("You have successfully been logged out", "success")
     session.pop("user")
     return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':

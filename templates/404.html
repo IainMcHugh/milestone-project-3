@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+<div class="error-page">
+  <h2 class="error-heading">
+    Oops, looks like the page you're looking for doesn't exist, click this link
+    to bring you back to the homepage.
+  </h2>
+  <a class="button-secondary button-large" href="{{ url_for('index') }}"
+    >Go to homepage</a
+  >
+</div>
+{% endblock %}

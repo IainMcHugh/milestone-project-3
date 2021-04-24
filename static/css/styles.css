@@ -429,6 +429,7 @@ main {
   border: 1px solid var(--BLUE);
   cursor: pointer;
   transition: opacity 200ms ease-in-out;
+  text-decoration: none;
 }
 
 .comment-container {
@@ -669,6 +670,22 @@ main {
 
 .crud-submit {
   align-self: flex-end;
+}
+
+/* Error Page */
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-heading {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 200;
+  margin-bottom: 48px;
 }
 
 /* Toasts */
