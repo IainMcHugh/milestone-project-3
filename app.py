@@ -38,13 +38,13 @@ def index():
     * These arrays populate an object and are returned.
     """
     websites_popular = [
-        x for x in mongo.db.websites.find().sort("stars", -1).limit(5)]
+        x for x in mongo.db.websites.find().sort("stars", -1).limit(10)]
 
     websites_recent = [
-        x for x in mongo.db.websites.find().sort("_id", -1).limit(5)]
+        x for x in mongo.db.websites.find().sort("_id", -1).limit(10)]
 
     websites_random = [x for x in mongo.db.websites.aggregate(
-        [{"$sample": {"size": 5}}]
+        [{"$sample": {"size": 10}}]
     )]
     websites = {
         'popular': websites_popular,
