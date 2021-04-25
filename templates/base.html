@@ -38,10 +38,11 @@
       <div class="header-options">
         <a
           class="button-link-secondary button-large"
-          href="{{ url_for('index')}}"
+          href="{{ url_for('store') }}"
         >
-          Home
+          Store
         </a>
+        <a class="button-link-secondary button-large open-info">About</a>
         {% if session.user %}
         <a
           href="{{ url_for('user', username=session['user']) }}"
@@ -65,13 +66,6 @@
           Sign up
         </button>
         {% endif %}
-        <a class="button-link-secondary button-large open-info"> Info </a>
-        <a
-          class="button-link-secondary button-large open-info"
-          href="{{ url_for('store') }}"
-        >
-          Store
-        </a>
       </div>
 
       <div class="header-options-mobile">
@@ -112,6 +106,15 @@
         >
           Home
         </a>
+        <a
+          class="mobile-menu-btn button-link-secondary button-large"
+          href="{{ url_for('store')}}"
+        >
+          Store
+        </a>
+        <a class="mobile-menu-btn button-link-secondary button-large open-info">
+          About
+        </a>
         {% if session.user %}
         <a
           href="{{ url_for('user', username=session['user']) }}"
@@ -133,9 +136,6 @@
           class="mobile-menu-btn button-link-secondary button-large open-signup"
         >
           Sign up
-        </a>
-        <a class="mobile-menu-btn button-link-secondary button-large open-info">
-          Info
         </a>
         {% endif %}
       </div>
@@ -201,7 +201,7 @@
     <div id="info-modal" class="modal-overlay">
       <div class="modal-content">
         <button class="close-button"><i class="fas fa-times"></i></button>
-        <p class="modal-header-title">Information</p>
+        <p class="modal-header-title">WebApp Store</p>
         <p class="modal-header-subtitle">
           Welcome to the Website App Store! The inspiration for this website
           came from the idea of bridging mobile apps and websites.

@@ -71,15 +71,20 @@ def store():
     if query:
         websites_search = list(mongo.db.websites.find(
             {"$text": {"$search": query}}))
+        websites = {
+            'sites': websites_search,
+            'searched': True
+        }
+
+        return render_template('store.html', websites=websites)
     else:
-        websites_search = list(mongo.db.websites.find())
+        websites_all = list(mongo.db.websites.find())
+        websites = {
+            'sites': websites_all,
+            'searched': False
+        }
 
-    websites = {
-        'search': websites_search,
-        'searched': True
-    }
-
-    return render_template('store.html', websites=websites)
+        return render_template('store.html', websites=websites)
 
 
 @app.route('/site_details/<websiteid>', methods=['GET', 'POST'])
