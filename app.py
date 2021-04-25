@@ -171,7 +171,7 @@ def siteDetails(websiteid):
 @app.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
     """ User page:
-    *   If there is a user logged in, builds the user page 
+    *   If there is a user logged in, builds the user page
         from that User's MongoDB document.
 
     Args:
@@ -180,7 +180,7 @@ def user(username):
     Returns:
     *   The username, user's data and any website's the user has added.
     """
-    if session["user"]:
+    if session.get("user") and session["user"] == username:
         user_data = mongo.db.users.find_one({"username": session["user"]})
         user_websites = []
 
@@ -213,7 +213,7 @@ def createSite():
         against the website's document for later retreival.
 
     """
-    if session['user']:
+    if session.get("user"):
         if request.method == 'POST':
             existing_website = mongo.db.websites.find_one(
                 {"url": request.form.get('site_url')})
@@ -254,8 +254,8 @@ def createSite():
             return redirect(url_for('user', username=session['user']))
 
         return render_template('create_site.html')
-    else:
-        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
 
 
 @app.route('/update_site/<websiteid>', methods=['GET', 'POST'])
@@ -272,36 +272,44 @@ def updateSite(websiteid):
     *   When successfully updated, it renders the site details page with
         updated information.
     """
-    if request.method == 'POST':
-        existing_website = mongo.db.websites.find_one(
-            {"$and": [
-                {"url": request.form.get('site_url')},
-                {"_id": {
-                    "$ne": ObjectId(websiteid)
-                }}
-            ]})
-        if existing_website:
-            flash("Website with this url already exists.", 'error')
-            return render_template('create_site.html')
+    if session.get("user"):
+        if request.method == 'POST':
+            existing_website = mongo.db.websites.find_one(
+                {"$and": [
+                    {"url": request.form.get('site_url')},
+                    {"_id": {
+                        "$ne": ObjectId(websiteid)
+                    }}
+                ]})
+            if existing_website:
+                flash("Website with this url already exists.", 'error')
+                return render_template('create_site.html')
 
-        website = mongo.db.websites.find_one_and_update(
-            {"_id": ObjectId(websiteid)},
-            {"$set": {
-                "title": request.form.get('site_name'),
-                "url": request.form.get('site_url'),
-                "owner": session["user"],
-                "description": request.form.get('site_description'),
-            }})
-        updated_website = mongo.db.websites.find_one(
-            {"_id": ObjectId(websiteid)})
-        flash("Your website was updated successfully", "success")
-        return render_template('siteDetails.html', website=updated_website)
+            website = mongo.db.websites.find_one_and_update(
+                {"_id": ObjectId(websiteid)},
+                {"$set": {
+                    "title": request.form.get('site_name'),
+                    "url": request.form.get('site_url'),
+                    "owner": session["user"],
+                    "description": request.form.get('site_description'),
+                }})
+            updated_website = mongo.db.websites.find_one(
+                {"_id": ObjectId(websiteid)})
+            flash("Your website was updated successfully", "success")
+            return render_template('siteDetails.html', website=updated_website)
 
-    website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
-    return render_template('update_site.html', website=website)
+        user_data = mongo.db.users.find_one({"username": session["user"]})
+        if "websites" in user_data:
+            if ObjectId(websiteid) in user_data["websites"]:
+                website = mongo.db.websites.find_one(
+                    {"_id": ObjectId(websiteid)})
+                return render_template('update_site.html', website=website)
+        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
 
 
-@app.route('/deleteSite/<websiteid>')
+@app.route('/delete_site/<websiteid>')
 def deleteSite(websiteid):
     """ Delete site route
     *   Deletes the website from the database
@@ -313,17 +321,23 @@ def deleteSite(websiteid):
     *   Removes the website document as well as reference to website in user's
         array of websites. Also removes the website's image from cloudinary.
     """
-    mongo.db.users.find_one_and_update(
-        {'username': session["user"]},
-        {"$pull": {"websites": ObjectId(websiteid)}},
-        upsert=True)
+    if session.get("user"):
+        user_data = mongo.db.users.find_one({"username": session["user"]})
+        if "websites" in user_data:
+            if ObjectId(websiteid) in user_data["websites"]:
+                mongo.db.users.find_one_and_update(
+                    {'username': session["user"]},
+                    {"$pull": {"websites": ObjectId(websiteid)}},
+                    upsert=True)
+                website = mongo.db.websites.find_one(
+                    {"_id": ObjectId(websiteid)})
+                destroy(website["image_id"])
+                mongo.db.websites.delete_one({"_id": ObjectId(websiteid)})
 
-    website = mongo.db.websites.find_one({"_id": ObjectId(websiteid)})
-    destroy(website["image_id"])
-    mongo.db.websites.remove({"_id": ObjectId(websiteid)})
+                flash('Website was successfully removed', 'success')
+                return redirect(url_for('user', username=session['user']))
 
-    flash('Website was successfully removed', 'success')
-    return redirect(url_for('user', username=session['user']))
+    return redirect(url_for('index'))
 
 
 @app.route('/signup', methods=['POST'])
