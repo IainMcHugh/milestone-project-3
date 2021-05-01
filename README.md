@@ -81,17 +81,17 @@ Welcome to the Web App Store! The inspiration for this website came from the ide
 ### Frameworks, Libraries & Programs Used
 
 1. [Google Fonts:](https://fonts.google.com/)
-   - Google fonts were used to import the 'Poppins' font into the style.css file which is used on all pages throughout the project.
+   - Google fonts were used to import the 'Roboto' font into the style.css file which is used on all pages throughout the project.
 2. [Font Awesome:](https://fontawesome.com/)
    - Font Awesome was used on all pages throughout the website to add icons for aesthetic and UX purposes.
 3. [jQuery:](https://jquery.com/)
-   - jQuery came with Bootstrap to make the navbar responsive but was also used for the smooth scroll function in JavaScript.
+   - jQuery was used to control all of the modal functionality on the website.
 4. [GitHub:](https://github.com/)
    - GitHub is used to store the projects code after being pushed from Git.
 5. [Photoshop:](https://www.adobe.com/ie/products/photoshop.html)
    - Photoshop was used to edit the logo, resizing images and editing photos for the website.
 6. [Figma:](https://figma.com/)
-   - Figma was used to create the [wireframes](https://github.com/) during the design process.
+   - Figma was used to create the [wireframes](https://www.figma.com/file/Wp53CDl5Ljzn83ykMjByPD/WebApp-Store?node-id=0%3A1) during the design process.
 7. [Visual Studio Code:](https://visualstudio.com/)
    - VSCode was the IDE I used to create, update, and maintain this project.
 
