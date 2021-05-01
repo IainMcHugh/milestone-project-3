@@ -2,9 +2,9 @@
 
 [View the live project here.](https://web-app-store.herokuapp.com/)
 
-![Rubber Ducking](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/mockup.png?raw=true)
+![WebApp Store](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/mockup.png?raw=true)
 
-Welcome to the Website App Store! The inspiration for this website came from the idea of bridging mobile apps and websites. Websites are generally viewed by consumers as functional products with apps being more appreciated for their visuals, whereas we know that websites, like apps, have huge focuses on aesthetics and visuals and we want to represent this. Feel free to browse the website's here like candy in a shop! If you've created your own website, make sure to make an account and add it to the collection here. You must include a screenshot and you can link to your site from here.
+Welcome to the Web App Store! The inspiration for this website came from the idea of bridging mobile apps and websites. Websites are generally viewed by consumers as functional products with apps being more appreciated for their visuals, whereas we know that websites, like apps, have huge focuses on aesthetics and visuals and we want to represent this. Feel free to browse the website's here like candy in a shop! If you've created your own website, make sure to make an account and add it to the collection here. You must include a screenshot and you can link to your site from here.
 
 ## User Experience (UX)
 
@@ -16,8 +16,8 @@ Welcome to the Website App Store! The inspiration for this website came from the
     2. As a site visitor, I want to be able to have a single place that I can leave feedback and report bugs on websites I use.
     3. As a site visitor, I want to be able to view websites categorised by user ratings.
     4. As a site visitor, I want to be able to read release notes for updates to websites that I use continuously.
-    5. As a website creator, I want to be able to update information on website as it changes over time.
-    6. As a website creator, I want to be able to delete a website entry if the website no longer exists.
+    5. As a returning user, I want to be able to update information on website as it changes over time.
+    6. As a returning user, I want to be able to delete a website entry if the website no longer exists.
 
 - ### Design
   - #### Colour Scheme
@@ -48,9 +48,11 @@ Welcome to the Website App Store! The inspiration for this website came from the
 
 ## Features
 
-- Responsive layout for all screen sizes
+- Responsive layout for all screen sizes.
 
-- Authentication with both logging in and registering
+- Authentication with both logging in and registering as a new user.
+
+- Carousel based homepage displaying websites by categories.
 
 - The ability to create, update, and delete sites.
 
@@ -58,7 +60,9 @@ Welcome to the Website App Store! The inspiration for this website came from the
 
 - Fully functional commenting with bug reporting, ratings, and most recent maintenance updates.
 
-- 3rd party image hosting (image deleted on site removal for maximum efficiency)
+- 3rd party image hosting (image deleted on site removal for maximum efficiency).
+
+- Custom Error page to maximise user's experience.
 
 ## Technologies Used
 
@@ -117,11 +121,11 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
      1. Website creators can simply add their own websites to their profile, which are then public. As the website owner they have the unique ability to add an 'Update' comment. This comment is distinguished by a green left border, and the most recent update by the website owner is displayed in the top panel for a website page.
 
-  5. As a website creator, I want to be able to update information on website as it changes over time.
+  5. As a returning visitor, I want to be able to update information on website as it changes over time.
 
      1. On a users page, they can see a list of their websites they have added. There is an option to edit an existing website. Here they can update the name, URL, and description of the site. Clicking the update button will automatically redirect them to the updated website details page.
 
-  6. As a website creator, I want to be able to delete a website entry if the website no longer exists.
+  6. As a returning visitor, I want to be able to delete a website entry if the website no longer exists.
 
      1. On a users page, they can see a list of their websites they have added. Along with the ability to edit an existing website, there is also an option to delete. If they choose to delete, then the website is removed, and can no longer be accessed.
 
@@ -132,10 +136,6 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 - A large amount of testing was done to ensure that all pages were linking correctly.
 - Friends and family members were asked to review the site and documentation to point out any bugs and/or user experience issues.
 - Multiple accounts were created and all of the sites functionality was tested, from CRUD operations to star rating system.
-
-### Testing
-
--
 
 ### Known Bugs
 
@@ -157,31 +157,17 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 
 ## Deployment
 
-- To start: CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py
-
-### GitHub Pages
-
-The project was deployed to GitHub Pages using the following steps...
-
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/)
-2. At the top of the Repository (not top of page), locate the "Settings" Button on the menu.
-   - Alternatively Click [Here](https://raw.githubusercontent.com/) for a GIF demonstrating the process starting from Step 2.
-3. Scroll down the Settings page until you locate the "GitHub Pages" Section.
-4. Under "Source", click the dropdown called "None" and select "Master Branch".
-5. The page will automatically refresh.
-6. Scroll back down through the page to locate the now published site [link](https://iainmchugh.github.io/milestone-project-2/) in the "GitHub Pages" section.
-
 ### Forking the GitHub Repository
 
 By forking the GitHub Repository we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original repository by using the following steps...
 
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/IainMcHugh/milestone-project-2)
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/IainMcHugh/milestone-project-3)
 2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
 3. You should now have a copy of the original repository in your GitHub account.
 
 ### Making a Local Clone
 
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/IainMcHugh/milestone-project-2/)
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/IainMcHugh/milestone-project-3/)
 2. Under the repository name, click "Clone or download".
 3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
 4. Open Git Bash
@@ -189,13 +175,13 @@ By forking the GitHub Repository we make a copy of the original repository on ou
 6. Type `git clone`, and then paste the URL you copied in Step 3.
 
 ```
-$ git clone git@github.com:IainMcHugh/milestone-project-2.git
+$ git clone git@github.com:IainMcHugh/milestone-project-3.git
 ```
 
 7. Press Enter. Your local clone will be created.
 
 ```
-$ git clone git@github.com:IainMcHugh/milestone-project-2.git
+$ git clone git@github.com:IainMcHugh/milestone-project-3.git
 > Cloning into `CI-Clone`...
 > remote: Counting objects: 10, done.
 > remote: Compressing objects: 100% (8/8), done.
@@ -205,9 +191,110 @@ $ git clone git@github.com:IainMcHugh/milestone-project-2.git
 
 Click [Here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to retrieve pictures for some of the buttons and more detailed explanations of the above process.
 
+### Connecting to MongoDB
+
+#### Requirements
+
+You will need the following installed in order to run this project locally:
+
+- [PIP](https://pip.pypa.io/en/stable/installing/)
+- [Python 3](https://www.python.org/downloads/)
+
+#### Steps
+
+1. Log in to your MongoDB account.
+2. Create a project called `webapp-store`.
+3. Full documentation on how to setup a MongoDB cluster [here](https://docs.atlas.mongodb.com/)
+4. Navigate to the `webapp-store` project, and with the Clusters tab active, choose the connect option.
+
+![MongoDB Connect](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/mongodb_connect_1.png?raw=true)
+
+3. From here, select `Connect your application`.
+
+![MongoDB Connect](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/mongodb_connect_2.png?raw=true)
+
+4. Copy the connection string.
+5. Create a `.env.py` file in the root directory of your project.
+6. In here you will need to define the following environment variables:
+
+```python
+import os
+
+os.environ.setdefault('IP', '0.0.0.0')
+os.environ.setdefault('PORT', '5000')
+os.environ.setdefault('SECRET_KEY', '') # ADD YOUR SECRET KEY HERE
+os.environ.setdefault('MONGO_URI', '') # ADD THE CONNECTION STRING HERE
+os.environ.setdefault('MONGO_DBNAME', 'webAppStoreDB') # THE NAME OF YOUR CLUSTER'S DATABASE
+```
+
+7. The next step is to connect to cloudinary, start by visting their site [here](https://www.cloudinary.com) and logging in.
+8. From the main dashboard page, you will see values associated with your `Account Details`, we need to update the `.env.py` with these:
+
+```python
+# Cloudinary
+os.environ.setdefault('CLOUD_NAME', '') # ADD (Account Details > Cloud name) HERE
+os.environ.setdefault('CLOUD_KEY', '') # ADD (Account Details > API Key) HERE
+os.environ.setdefault('CLOUD_SECRET', '') # (ADD Account Details > API Secret) HERE
+os.environ.setdefault('CLOUD_ENV', '') # ADD (Account Details > API Environment variable) HERE
+```
+
+9. Open the terminal in the root directory and run the following:
+
+```
+pip install -r requirements.txt
+```
+
+10. You should now be able to run the application locally, to start:
+
+```
+<Cloudinary API ENV VAR> python3 app.py
+```
+
+You will need to replace `<Cloudinary API ENV VAR>` with your entire cloudinary API environment variable string.
+The application should be running locally on:
+
+```
+http://0.0.0.0:5000/
+```
+
+### Deployment to Heroku
+
+The first step is to create a `requirements.txt` and Procfile in the root directory of the project, which can be done with the following:
+
+```
+   pip3 freeze --local > requirements.txt
+   echo web: python3 app.py > Procfile
+```
+
+#### Deployment
+
+1. Navigate to [Heroku](https://www.heroku.com) and sign in.
+2. Create a new application, giving it an appropriate name and region.
+3. By default you should be now on the application dashboard page, navigate to the `Deploy` tab and `Connect to Github`
+
+![Connect to Github](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/heroku_connect_1.png?raw=true)
+
+4. You will need to connect your project's Github repository by entering the `repo-name` and selecting `Connect`.
+5. When your project is successfully connected, navigate to the `Settings` tab and select `Reveal Config Vars`
+
+![Reveal Config Vars](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/heroku_connect_2.png?raw=true)
+
+6. Here you will need to add the following config variables:
+
+![Add Config Vars](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/heroku_connect_3.png?raw=true)
+
+NOTE: These should be identical to the environment variables defined in your `.env.py` file. The only additional value is the `CLOUDINARY_URL`, which should have the same value as your `CLOUD_ENV` variable.
+
+7. Navigate back to the `Deploy` tab, and under `Automatic deploys` you will need to select `Enable Automatic Deploys`.
+8. Make sure that the master/main branch is selected, when successful it should appear like this:
+
+![Successful Auto Deploy](https://github.com/IainMcHugh/milestone-project-3/blob/main/static/images/heroku_connect_4.png?raw=true)
+
+9. You should now be able to open the application by selecting the `Open app` along the top.
+
 ### Database Structure
 
-I used TypeScript to create the structures for how I wanted my MongoDB documents and collections to be formed. I would greatly recommend this as it helped my mentally map what I would need to create each page. Here are the structures I used:
+I used TypeScript interfaces to create the structures for how I wanted my MongoDB documents and collections to be formed. I would greatly recommend this as it helped me mentally map what I would need to create each page. Here are the structures I used:
 
 ```typescript
 type UserWebsite = {
@@ -225,7 +312,7 @@ type Comments = {
 interface Users {
   username: string;
   email: string;
-  websites: UserWebsite[]
+  websites: UserWebsite[];
 }
 
 interface Websites {
@@ -270,10 +357,6 @@ interface Websites {
 
 - [Site for icons](https://www.flaticon.com/)
 - [The Rubber Duck image source](https://www.pngegg.com/en/png-zmwpv)
-
-### Testing
-
--
 
 ### Acknowledgements
 
@@ -323,3 +406,5 @@ Twitter is an American microblogging and social networking service on which user
 
 https://www.zalando.com
 Zalando SE is a German multi national e-commerce company based in Berlin, Germany. The company follows a platform approach, offering fashion and lifestyle products to customers in 17 European markets. Zalando was founded in Germany in 2008.The Swedish company Kinnevik is Zalando's largest stakeholder, with a 21% share.
+
+CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py
