@@ -13,11 +13,14 @@ Welcome to the Web App Store! The inspiration for this website came from the ide
   - #### Site Visitor Goals
 
     1. As a site visitor, I want to be able to browse websites by topic instead of what best matches my search query on a search engine.
-    2. As a site visitor, I want to be able to have a single place that I can leave feedback and report bugs on websites I use.
-    3. As a site visitor, I want to be able to view websites categorised by user ratings.
+    2. As a site visitor, I want to be able to view websites categorised by user ratings.
+    3. As a site visitoy, I want lookup functionality to search for a specific website that has been added.
     4. As a site visitor, I want to be able to read release notes for updates to websites that I use continuously.
-    5. As a returning user, I want to be able to update information on website as it changes over time.
-    6. As a returning user, I want to be able to delete a website entry if the website no longer exists.
+    5. As a returning user, I want to have a single place that I can leave feedback and report bugs on websites I use.
+    6. As a returning user, I want a place to receive user feedback on my personal websites.
+    7. As a returning user, I want to be able to reply to user feedback on my websites, and provide updates.
+    8. As a returning user, I want to be able to delete a website entry if the website no longer exists.
+    9. As a returning user, I don't want other individuals to be able to edit or delete websites associated with my account
 
 - ### Design
   - #### Colour Scheme
@@ -54,13 +57,15 @@ Welcome to the Web App Store! The inspiration for this website came from the ide
 
 - Carousel based homepage displaying websites by categories.
 
+- Integrated search functionality.
+
 - The ability to create, update, and delete sites.
 
 - Information modal for overview of the sites purpose.
 
-- Fully functional commenting with bug reporting, ratings, and most recent maintenance updates.
+- Fully functional commenting system with bug reporting, star ratings, and most recent maintenance updates.
 
-- 3rd party image hosting (image deleted on site removal for maximum efficiency).
+- 3rd party image hosting (images also deleted on a site removal for maximum efficiency).
 
 - Custom Error page to maximise user's experience.
 
@@ -107,27 +112,42 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
   1. As a site visitor, I want to be able to browse websites by topic instead of what best matches my search query on a search engine.
 
      1. When a user visits the WebAppStore, they are presented with carousels of images of websites where they can choose based on how a site looks.
+     2. The user can also select the Store page in order to view all websites available on the site.
 
-  2. As a site visitor, I want to be able to have a single place that I can leave feedback and report bugs on websites I use.
-
-     1. Users can click onto or search for any website that has been added to the WebAppStore, and can leave multiple comments against that website.
-     2. The user can also report any bugs found in the comments section, and these are distinguished by a red left border.
-
-  3. As a site visitor, I want to be able to view websites categorised by user ratings.
+  2. As a site visitor, I want to be able to view websites categorised by user ratings.
 
      1. One of the 3 sections of the homepage is a 'Most popular' carousel of websites available on the site. This displays websites by order of star rating in descending order, so users can see the most popular sites.
+
+  3. As a site visitoy, I want lookup functionality to search for a specific website that has been added.
+
+     1. On applicable pages, there is a search form where the users can search by name for a specific website.
+     2. This can return multiple results, and will also handle a search with no results.
 
   4. As a site visitor, I want to be able to read release notes for updates to websites that I use continuously.
 
      1. Website creators can simply add their own websites to their profile, which are then public. As the website owner they have the unique ability to add an 'Update' comment. This comment is distinguished by a green left border, and the most recent update by the website owner is displayed in the top panel for a website page.
 
-  5. As a returning visitor, I want to be able to update information on website as it changes over time.
+  5. As a returning user, I want to have a single place that I can leave feedback and report bugs on websites I use.
+
+     1. Users can click onto or search for any website that has been added to the WebAppStore, and can leave multiple comments against that website.
+     2. The user can also report any bugs found in the comments section, and these are distinguished by a red left border.
+
+  6. As a returning user, I want a place to receive user feedback on my personal websites.
+
+     1. A logged in user has the ability to leave comments in the form of either 'comment' or 'bug' on a website.
+     2. If they leave a comment, they will be required to also leave a rating of that particular website.
+
+  7. As a returning visitor, I want to be able to update information on website as it changes over time.
 
      1. On a users page, they can see a list of their websites they have added. There is an option to edit an existing website. Here they can update the name, URL, and description of the site. Clicking the update button will automatically redirect them to the updated website details page.
 
-  6. As a returning visitor, I want to be able to delete a website entry if the website no longer exists.
+  8. As a returning visitor, I want to be able to delete a website entry if the website no longer exists.
 
      1. On a users page, they can see a list of their websites they have added. Along with the ability to edit an existing website, there is also an option to delete. If they choose to delete, then the website is removed, and can no longer be accessed.
+
+  9. As a returning user, I don't want other individuals to be able to edit or delete websites associated with my account
+
+     1. All application routes contain specific checks for that route, that mean only authorized users can access them. For example, if a user manually enters the url for a route that would bring them to the update page of another users website, they will be redirected to the homepage.
 
 ### Further Testing
 
@@ -294,36 +314,38 @@ NOTE: These should be identical to the environment variables defined in your `.e
 
 ### Database Structure
 
-I used TypeScript interfaces to create the structures for how I wanted my MongoDB documents and collections to be formed. I would greatly recommend this as it helped me mentally map what I would need to create each page. Here are the structures I used:
+I used TypeScript interfaces to create the structures for how I wanted my MongoDB documents and collections to be formed. I would greatly recommend this as it helped me mentally map what I would need to create each page. Here is the structures I used:
 
 ```typescript
 type UserWebsite = {
-    website_id: websiteObjectId();
-    isOwner: boolean;
+    _id: ObjectId();
 }
 
 type Comments = {
   username: string;
   timestamp: Date;
+  stars?: number;
   value: string;
-  comment_type: 'COMMENT' | 'BUG' | 'UPDATE';
+  comment_type: 'comment' | 'bug' | 'update';
 };
 
 interface Users {
   username: string;
   email: string;
+  password (hashed): string;
   websites: UserWebsite[];
 }
 
 interface Websites {
-  objectId: objectId();
-  owners: string[];
+  _id: ObjectId();
   title: string;
   url: string;
   description: string;
   stars: number;
   reviews: number;
   last_update: string;
+  image: string;
+  image_id: string;
   comments: Comments[];
 }
 ```
@@ -332,9 +354,11 @@ interface Websites {
 
 ### Code
 
-- [CSS scollbar](https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar): This helped me a lot when trying to customise the scrollbar within the text area on the message panel, which was a vital requirement within the design.
+- [Logo bounce effect](https://stackoverflow.com/questions/29786230/how-to-create-css3-bounce-effect): I was really pleased with the custom animation effect I achieved on the logo when hovering, and this stackoverflow answer really helped with that.
 
-- [Article by Valentino Gagliardi](https://www.valentinog.com/blog/link-download/): This extremely helpful method allowed me to embed the entire JSON chat logs within an anchor tag's href attribute, making it downloadable by the user.
+- [Sorting a list in Jinja](https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2): A really quick and cool way of sorting lists that I implemented within this project.
+
+- [Deleting flash messages](https://stackoverflow.com/questions/57660542/flask-closing-flash-message): I was able to extend the flash functionality to essentially create a 3 tiered toast notification setup on the website. With this it was very easy to fire `success`, `info`, and `error` toasts. However I wanted the user to have the ability to close a toast, and after a lot of struggle I found this solution which worked.
 
 ### Content
 
@@ -342,69 +366,22 @@ interface Websites {
 
 - [Multi-mockup](https://techsini.com/multi-mockup/): A great resource for generating mockup displays for the site on various different screens and devices. Used for the cover photo of this readme file.
 
-- Star icon: https://fontawesome.com/
-- delete flash message: https://stackoverflow.com/questions/57660542/flask-closing-flash-message
-- bounce effect on logo: https://stackoverflow.com/questions/29786230/how-to-create-css3-bounce-effect
-- Cloud docs: https://cloudinary.com/documentation/image_upload_api_reference#sample_response
-  https://cloudinary.com/documentation/django_integration
-  https://github.com/tiagocordeiro/flask-cloudinary
-- Slider: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_rangeslider
-- Sorting in Jinja templating: https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
+- The following 3 resources were what enabled me to integrate cloudinary into this project as an image hosting service:
+
+  - [Cloudinary Integration](https://cloudinary.com/documentation/django_integration)
+  - [Flask with Cloudinary](https://github.com/tiagocordeiro/flask-cloudinary)
+  - [Image uploading](https://cloudinary.com/documentation/image_upload_api_reference#sample_response)
 
 ### Media
 
 - All images were created/edited by the developer or sourced from image websites where Creative Commons license is active.
 
-- [Site for icons](https://www.flaticon.com/)
-- [The Rubber Duck image source](https://www.pngegg.com/en/png-zmwpv)
+- [Site for icons](https://fontawesome.com/)
 
 ### Acknowledgements
 
-- I would like to thank my mentor, Oluwafemi. With each mentoring session I feel I am learning more and more about how to approach web projects, and much of this is down to your guidance. I definitely feel that following your advice has allowed me to acheive a high quality in my projects thus far.
+- I would like to thank my mentor, Oluwafemi. It is great to have someone there who can give a refreshed viewing of your project, where it does well and what it's missing. These things become hard to spot when you're working on it everyday, and you know you can trust his insights as being really valuable, always bringing your project to a top level.
 
-- I also want to thank Code Institute in providing me with information and guides on how to structure my project. There is always new things for me to learn with JavaScript and I have loved every minute of the course content.
+- I also want to thank Code Institute in providing me with information and guides on how to structure my project. I really felt with this milestone project the video content Code Institute provided was essential for allowing me to lay the foundations of this project and get it up and running. While I feel the complexity has increased with each project, I feel very clear on how everything is working in this application.
 
 - Again I would like to thank the Slack community associated with Code Institute. It is a great way to find inspiration and feel as part of a community who share a similar mindset and goal.
-
-note: in env.py change key
-
-MY NOTES (DELETE AFTER)
-
-Sample upload cloudinary
-
-Sample Data:
-
-https://www.facebook.com/
-Facebook is an American online social media and social networking service based in Menlo Park, California, and a flagship service of the namesake company Facebook, Inc. It was founded by Mark Zuckerberg, along with fellow Harvard College students and roommates Eduardo Saverin, Andrew McCollum, Dustin Moskovitz, and Chris Hughes.
-
-https://github.com/
-GitHub, Inc. is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features. It provides access control and several collaboration features such as bug tracking, feature requests, task management, continuous integration and wikis for every project. Headquartered in California, it has been a subsidiary of Microsoft since 2018.
-
-https://www.figma.com/
-Figma is a vector graphics editor and prototyping tool which is primarily web-based, with additional offline features enabled by desktop applications for macOS and Windows. The Figma Mirror companion apps for Android and iOS allow viewing Figma prototypes on mobile devices. The feature set of Figma focuses on use in user interface and user experience design, with an emphasis on real-time collaboration.
-
-https://www.youtube.com/
-YouTube is an American online video-sharing platform headquartered in San Bruno, California. The service, created in February 2005 by three former PayPal employees—Chad Hurley, Steve Chen, and Jawed Karim—was bought by Google in November 2006 for US$1.65 billion and now operates as one of the company's subsidiaries. YouTube is the second most-visited website after Google Search, according to Alexa Internet rankings.
-
-https://www.linkedin.com
-LinkedIn is an American business and employment-oriented online service that operates via websites and mobile apps. Launched on May 5, 2003, the platform is mainly used for professional networking, and allows job seekers to post their CVs and employers to post jobs. As of 2015, most of the company's revenue came from selling access to information about its members to recruiters and sales professionals. Since December 2016, it has been a wholly owned subsidiary of Microsoft. As of February 2021, LinkedIn had 740 million registered members from 150 countries.
-
-https://www.netflix.com
-Netflix, Inc. is an American over-the-top content platform and production company headquartered in Los Gatos, California. Netflix was founded in 1997 by Reed Hastings and Marc Randolph in Scotts Valley, California. The company's primary business is a subscription-based streaming service offering online streaming from a library of films and television series, including those produced in-house. In January 2021, Netflix reached 203.7 million subscribers, including 73 million in the United States.
-
-https://stackoverflow.com/
-Stack Overflow is a question and answer site for professional and enthusiast programmers. It is a privately held website, the flagship site of the Stack Exchange Network, created in 2008 by Jeff Atwood and Joel Spolsky. It features questions and answers on a wide range of topics in computer programming.
-
-https://trello.com
-Trello is a web-based, Kanban-style, list-making application and is a subsidiary of Atlassian. Originally created by Fog Creek Software in 2011, it was spun out to form the basis of a separate company in 2014 and later sold to Atlassian in January 2017. The company is based in New York City.
-
-https://mail.google.com
-Gmail is a free email service developed by Google. Users can access Gmail on the web and using third-party programs that synchronize email content through POP or IMAP protocols. Gmail started as a limited beta release on April 1, 2004 and ended its testing phase on July 7, 2009. By October 2019, Gmail had 1.5 billion active users worldwide.
-
-https://twitter.com
-Twitter is an American microblogging and social networking service on which users post and interact with messages known as "tweets". Registered users can post, like and retweet tweets, but unregistered users can only read them. Users access Twitter through its website interface or its mobile-device application software ("app"), though the service could also be accessed via SMS before April 2020.
-
-https://www.zalando.com
-Zalando SE is a German multi national e-commerce company based in Berlin, Germany. The company follows a platform approach, offering fashion and lifestyle products to customers in 17 European markets. Zalando was founded in Germany in 2008.The Swedish company Kinnevik is Zalando's largest stakeholder, with a 21% share.
-
-CLOUDINARY_URL=cloudinary://483728613595827:VyZwK4orRoyA79PJUGYH2f8pdII@dp6r73isa python3 app.py

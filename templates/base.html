@@ -236,8 +236,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
   <script>
+    // This is a necessary inline script in order to allow the user to close flash messages.
     function closeToast(flash) {
-      console.log(flash.closest('.toast-container').remove());
+      flash.closest('.toast-container').remove();
     }
   </script>
 </html>
